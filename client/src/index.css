@@ -40,88 +40,91 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-  --color-teal: var(--teal);
-  --color-teal-foreground: var(--teal-foreground);
-  --font-serif: 'Playfair Display', Georgia, serif;
-  --font-sans: 'Source Sans 3', system-ui, sans-serif;
+  --color-iei-navy: var(--iei-navy);
+  --color-iei-teal: var(--iei-teal);
+  --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Nunito Sans', system-ui, -apple-system, sans-serif;
 }
 
 :root {
-  /* IEI 1946 - Institutional Elegance Theme */
-  /* Teal accent from the original site */
-  --teal: #00b4a0;
-  --teal-foreground: #ffffff;
-  
-  --primary: #1a3c5e;
-  --primary-foreground: #ffffff;
-  --sidebar-primary: #1a3c5e;
-  --sidebar-primary-foreground: #ffffff;
-  --chart-1: #00b4a0;
-  --chart-2: #1a3c5e;
-  --chart-3: #2d6a4f;
-  --chart-4: #40916c;
-  --chart-5: #74c69d;
-  --radius: 0.375rem;
-  --background: #fafaf8;
-  --foreground: #1c1c1c;
-  --card: #ffffff;
-  --card-foreground: #1c1c1c;
-  --popover: #ffffff;
-  --popover-foreground: #1c1c1c;
-  --secondary: #f5f5f0;
-  --secondary-foreground: #3a3a3a;
-  --muted: #f0eeeb;
-  --muted-foreground: #6b6b6b;
-  --accent: #00b4a0;
-  --accent-foreground: #ffffff;
-  --destructive: #c0392b;
-  --destructive-foreground: #ffffff;
-  --border: #e2e0dc;
-  --input: #f5f5f0;
-  --ring: #00b4a0;
-  --sidebar: #ffffff;
-  --sidebar-foreground: #1c1c1c;
-  --sidebar-accent: #00b4a0;
-  --sidebar-accent-foreground: #ffffff;
-  --sidebar-border: #e2e0dc;
-  --sidebar-ring: #00b4a0;
+  /*
+   * IEI 1946 - Refined Institutional Palette + Elsevier Layout
+   * Navy: #1b3a5c (slightly warmer than original #1a3c5e)
+   * Teal: #009e8e (richer, more sophisticated than #00b4a0)
+   */
+  --iei-navy: #1b3a5c;
+  --iei-teal: #009e8e;
+
+  --primary: oklch(0.30 0.05 240);
+  --primary-foreground: oklch(1 0 0);
+  --sidebar-primary: oklch(0.56 0.10 180);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --chart-1: oklch(0.56 0.10 180);
+  --chart-2: oklch(0.35 0.06 240);
+  --chart-3: oklch(0.45 0.08 220);
+  --chart-4: oklch(0.52 0.10 200);
+  --chart-5: oklch(0.65 0.08 180);
+  --radius: 0.25rem;
+  --background: oklch(0.995 0.001 240);
+  --foreground: oklch(0.18 0.015 240);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.18 0.015 240);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.18 0.015 240);
+  --secondary: oklch(0.97 0.003 240);
+  --secondary-foreground: oklch(0.35 0.015 240);
+  --muted: oklch(0.96 0.003 240);
+  --muted-foreground: oklch(0.48 0.01 240);
+  --accent: oklch(0.56 0.10 180);
+  --accent-foreground: oklch(1 0 0);
+  --destructive: oklch(0.55 0.22 25);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.91 0.004 240);
+  --input: oklch(0.96 0.003 240);
+  --ring: oklch(0.56 0.10 180);
+  --sidebar: oklch(1 0 0);
+  --sidebar-foreground: oklch(0.18 0.015 240);
+  --sidebar-accent: oklch(0.56 0.10 180);
+  --sidebar-accent-foreground: oklch(1 0 0);
+  --sidebar-border: oklch(0.91 0.004 240);
+  --sidebar-ring: oklch(0.56 0.10 180);
 }
 
 .dark {
-  --teal: #00d4c0;
-  --teal-foreground: #0a0a0a;
-  --primary: #e0e0e0;
-  --primary-foreground: #0f1419;
-  --sidebar-primary: #00d4c0;
-  --sidebar-primary-foreground: #0f1419;
-  --background: #0f1419;
-  --foreground: #e8e8e8;
-  --card: #1a1f26;
-  --card-foreground: #e8e8e8;
-  --popover: #1a1f26;
-  --popover-foreground: #e8e8e8;
-  --secondary: #2a3038;
-  --secondary-foreground: #b8b8b8;
-  --muted: #3a4048;
-  --muted-foreground: #888888;
-  --accent: #00d4c0;
-  --accent-foreground: #0f1419;
-  --destructive: #ef4444;
-  --destructive-foreground: #ffffff;
-  --border: #3a4048;
-  --input: #2a3038;
-  --ring: #00d4c0;
-  --chart-1: #00d4c0;
-  --chart-2: #4a8cba;
-  --chart-3: #2d6a4f;
-  --chart-4: #40916c;
-  --chart-5: #74c69d;
-  --sidebar: #1a1f26;
-  --sidebar-foreground: #e8e8e8;
-  --sidebar-accent: #00d4c0;
-  --sidebar-accent-foreground: #0f1419;
-  --sidebar-border: #3a4048;
-  --sidebar-ring: #00d4c0;
+  --iei-navy: #a0c4e8;
+  --iei-teal: #00d4c0;
+  --primary: oklch(0.90 0.01 240);
+  --primary-foreground: oklch(0.12 0.015 240);
+  --sidebar-primary: oklch(0.65 0.10 180);
+  --sidebar-primary-foreground: oklch(0.12 0.015 240);
+  --background: oklch(0.13 0.015 240);
+  --foreground: oklch(0.90 0.005 240);
+  --card: oklch(0.17 0.015 240);
+  --card-foreground: oklch(0.90 0.005 240);
+  --popover: oklch(0.17 0.015 240);
+  --popover-foreground: oklch(0.90 0.005 240);
+  --secondary: oklch(0.21 0.015 240);
+  --secondary-foreground: oklch(0.75 0.005 240);
+  --muted: oklch(0.25 0.015 240);
+  --muted-foreground: oklch(0.62 0.01 240);
+  --accent: oklch(0.65 0.10 180);
+  --accent-foreground: oklch(0.12 0.015 240);
+  --destructive: oklch(0.65 0.20 25);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.28 0.015 240);
+  --input: oklch(0.21 0.015 240);
+  --ring: oklch(0.65 0.10 180);
+  --chart-1: oklch(0.65 0.10 180);
+  --chart-2: oklch(0.50 0.08 240);
+  --chart-3: oklch(0.55 0.08 220);
+  --chart-4: oklch(0.60 0.10 200);
+  --chart-5: oklch(0.70 0.08 180);
+  --sidebar: oklch(0.17 0.015 240);
+  --sidebar-foreground: oklch(0.90 0.005 240);
+  --sidebar-accent: oklch(0.65 0.10 180);
+  --sidebar-accent-foreground: oklch(0.12 0.015 240);
+  --sidebar-border: oklch(0.28 0.015 240);
+  --sidebar-ring: oklch(0.65 0.10 180);
 }
 
 @layer base {
@@ -130,12 +133,14 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: 'Source Sans 3', system-ui, sans-serif;
+    font-family: 'Nunito Sans', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
   }
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+    line-height: 1.3;
   }
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
@@ -162,6 +167,23 @@
   .flex {
     min-height: 0;
     min-width: 0;
+  }
+
+  /* Elsevier-style accent bar using IEI teal */
+  .accent-bar {
+    display: block;
+    width: 3rem;
+    height: 3px;
+    background: var(--iei-teal);
+    margin-bottom: 1rem;
+  }
+
+  .section-heading {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--foreground);
+    margin-bottom: 0.5rem;
   }
 
   @media (min-width: 640px) {

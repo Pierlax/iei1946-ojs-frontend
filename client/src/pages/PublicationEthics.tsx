@@ -111,10 +111,10 @@ const SECTIONS = [
 
 export default function PublicationEthics() {
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="min-h-screen flex flex-col bg-white">
       <Header />
 
-      <section className="bg-[#1a3c5e] py-12 lg:py-16">
+      <section className="bg-[#1b3a5c] py-12 lg:py-16">
         <div className="container">
           <h1 className="font-serif text-3xl lg:text-4xl font-bold text-white">Publication Ethics</h1>
           <p className="text-white/70 mt-2 text-sm">{JOURNAL.fullName}</p>
@@ -123,11 +123,11 @@ export default function PublicationEthics() {
 
       <main className="flex-1">
         <div className="container py-10 lg:py-16 max-w-3xl">
-          <div className="bg-white rounded-lg border border-border p-6 mb-10">
-            <h2 className="font-serif text-xl font-bold text-[#1a3c5e] mb-3">
+          <div className="bg-white border border-gray-200 p-6 mb-10">
+            <h2 className="font-serif text-xl font-bold text-[#1b3a5c] mb-3">
               Publication Ethics and Malpractice Statement
             </h2>
-            <p className="text-sm text-foreground/80 leading-relaxed text-justify">
+            <p className="text-sm text-gray-600 leading-relaxed text-justify">
               <em>{JOURNAL.fullName}</em> is committed to upholding the highest standards of
               publication ethics and takes all possible measures against any publication malpractice.
               The journal follows the guidelines and best practices published by professional
@@ -136,7 +136,7 @@ export default function PublicationEthics() {
                 href="https://publicationethics.org/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#00b4a0] font-semibold hover:underline"
+                className="text-[#009e8e] font-semibold hover:underline"
               >
                 Committee on Publication Ethics (COPE)
               </a>
@@ -148,17 +148,17 @@ export default function PublicationEthics() {
             const Icon = section.icon;
             return (
               <section key={section.title} className="mb-10">
-                <h2 className="font-serif text-xl font-bold text-[#1a3c5e] mb-4 pb-2 border-b border-border flex items-center gap-2">
-                  <Icon size={20} className="text-[#00b4a0]" />
+                <h2 className="font-serif text-xl font-bold text-[#1b3a5c] mb-4 pb-2 border-b border-gray-200 flex items-center gap-2">
+                  <Icon size={20} className="text-[#009e8e]" />
                   {section.title}
                 </h2>
                 <div className="space-y-4">
                   {section.subsections.map((sub, i) => (
                     <div key={i}>
                       {sub.subtitle && (
-                        <h3 className="text-sm font-bold text-[#1a3c5e] mb-1">{sub.subtitle}</h3>
+                        <h3 className="text-sm font-bold text-[#1b3a5c] mb-1">{sub.subtitle}</h3>
                       )}
-                      <p className="text-sm text-foreground/80 leading-relaxed text-justify">
+                      <p className="text-sm text-gray-600 leading-relaxed text-justify">
                         {sub.text}
                       </p>
                     </div>

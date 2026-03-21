@@ -1,121 +1,76 @@
 // ============================================================
-// Footer Component - IEI 1946
-// Matches the current site footer with all links and info
+// Footer Component - Elsevier Layout + IEI Institutional Colors
+// Navy #1b3a5c, Teal #009e8e
 // ============================================================
 
 import { Link } from "wouter";
-import { JOURNAL, NAV_ITEMS, INDEXING } from "@/lib/data";
-import { ExternalLink } from "lucide-react";
+import { JOURNAL, INDEXING } from "@/lib/data";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#1a3c5e] text-white/90">
-      {/* Main footer */}
-      <div className="container py-12 lg:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-          {/* Column 1: Institute info */}
+    <footer className="bg-[#1b3a5c] text-white/80">
+      {/* Main footer content */}
+      <div className="container py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* Journal info */}
           <div>
-            <h3 className="font-serif text-lg font-bold text-white mb-4">
-              {JOURNAL.instituteEn}
-            </h3>
-            <p className="text-sm text-white/70 leading-relaxed mb-3">
-              of the {JOURNAL.publisherEn}
+            <img
+              src={JOURNAL.logoFooterUrl}
+              alt={JOURNAL.fullName}
+              className="h-12 w-auto mb-4 opacity-90"
+            />
+            <p className="text-sm text-white/50 mb-3 leading-relaxed">
+              A peer-reviewed, open access journal published by the {JOURNAL.publisherEn} since {JOURNAL.foundedYear}.
             </p>
-            <div className="text-sm text-white/60 space-y-1">
-              <p>{JOURNAL.institute}</p>
-              <p>Camera di Commercio di Genova</p>
-              <p>{JOURNAL.address}</p>
+            <div className="mt-4 flex items-center gap-2">
+              <span className="bg-[#009e8e] text-white text-xs px-2 py-0.5 rounded font-semibold">Open Access</span>
+              <span className="text-xs text-white/40">ISSN: {JOURNAL.issn}</span>
             </div>
-            <a
-              href={`https://${JOURNAL.website}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-sm text-[#00b4a0] hover:text-[#00d4c0] mt-3 transition-colors"
-            >
-              {JOURNAL.website} <ExternalLink size={12} />
-            </a>
           </div>
 
-          {/* Column 2: Navigation */}
+          {/* Quick Links */}
           <div>
-            <h4 className="font-sans text-sm font-semibold text-white uppercase tracking-wider mb-4">
-              Navigation
-            </h4>
-            <nav className="flex flex-col gap-2">
-              {NAV_ITEMS.map((item) => (
-                <Link
-                  key={item.path}
-                  href={item.path}
-                  className="text-sm text-white/70 hover:text-[#00b4a0] transition-colors"
-                >
-                  {item.label}
-                </Link>
-              ))}
-              <Link href="/about" className="text-sm text-white/70 hover:text-[#00b4a0] transition-colors">
-                About the Review
-              </Link>
-              <Link href="/submission-guidelines" className="text-sm text-white/70 hover:text-[#00b4a0] transition-colors">
-                Submission Guidelines
-              </Link>
-            </nav>
+            <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">Journal</h4>
+            <ul className="space-y-2.5">
+              <li><Link href="/review" className="text-sm text-white/60 hover:text-[#00c4b0] transition-colors">Current Issue</Link></li>
+              <li><Link href="/review" className="text-sm text-white/60 hover:text-[#00c4b0] transition-colors">Archive</Link></li>
+              <li><Link href="/about" className="text-sm text-white/60 hover:text-[#00c4b0] transition-colors">About the Review</Link></li>
+              <li><Link href="/editorial-board" className="text-sm text-white/60 hover:text-[#00c4b0] transition-colors">Editorial Board</Link></li>
+              <li><Link href="/institute" className="text-sm text-white/60 hover:text-[#00c4b0] transition-colors">Institute</Link></li>
+            </ul>
           </div>
 
-          {/* Column 3: For Authors */}
+          {/* For Authors */}
           <div>
-            <h4 className="font-sans text-sm font-semibold text-white uppercase tracking-wider mb-4">
-              For Authors
-            </h4>
-            <nav className="flex flex-col gap-2">
-              <Link href="/submission-guidelines" className="text-sm text-white/70 hover:text-[#00b4a0] transition-colors">
-                Submission Guidelines
-              </Link>
-              <a
-                href={JOURNAL.submissionUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-white/70 hover:text-[#00b4a0] transition-colors flex items-center gap-1"
-              >
-                Submit a Paper <ExternalLink size={11} />
-              </a>
-              <a
-                href={JOURNAL.submissionUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-white/70 hover:text-[#00b4a0] transition-colors flex items-center gap-1"
-              >
-                Author Login <ExternalLink size={11} />
-              </a>
-              <Link href="/oa-copyright" className="text-sm text-white/70 hover:text-[#00b4a0] transition-colors">
-                OA & Copyright
-              </Link>
-              <Link href="/publication-ethics" className="text-sm text-white/70 hover:text-[#00b4a0] transition-colors">
-                Publication Ethics
-              </Link>
-            </nav>
+            <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">For Authors</h4>
+            <ul className="space-y-2.5">
+              <li><Link href="/submission-guidelines" className="text-sm text-white/60 hover:text-[#00c4b0] transition-colors">Submission Guidelines</Link></li>
+              <li>
+                <a href={JOURNAL.submissionUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-white/60 hover:text-[#00c4b0] transition-colors">
+                  Author Login
+                </a>
+              </li>
+              <li><Link href="/oa-copyright" className="text-sm text-white/60 hover:text-[#00c4b0] transition-colors">OA & Copyright</Link></li>
+              <li><Link href="/publication-ethics" className="text-sm text-white/60 hover:text-[#00c4b0] transition-colors">Publication Ethics</Link></li>
+              <li><Link href="/contacts" className="text-sm text-white/60 hover:text-[#00c4b0] transition-colors">Contact Us</Link></li>
+            </ul>
           </div>
 
-          {/* Column 4: Indexed in */}
+          {/* Indexing & Contact */}
           <div>
-            <h4 className="font-sans text-sm font-semibold text-white uppercase tracking-wider mb-4">
-              Indexed In
-            </h4>
+            <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">Indexed In</h4>
             <div className="flex flex-wrap gap-2 mb-6">
-              {INDEXING.map((idx) => (
-                <span
-                  key={idx}
-                  className="px-3 py-1 text-xs font-medium bg-white/10 rounded-full text-white/80"
-                >
-                  {idx}
+              {INDEXING.map((db) => (
+                <span key={db} className="text-xs bg-white/10 text-white/70 px-2.5 py-1 rounded">
+                  {db}
                 </span>
               ))}
             </div>
-            <h4 className="font-sans text-sm font-semibold text-white uppercase tracking-wider mb-3">
-              Contact
-            </h4>
-            <a
-              href={`mailto:${JOURNAL.email}`}
-              className="text-sm text-[#00b4a0] hover:text-[#00d4c0] transition-colors"
-            >
+            <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-3">Contact</h4>
+            <p className="text-sm text-white/50 leading-relaxed">
+              {JOURNAL.address}
+            </p>
+            <a href={`mailto:${JOURNAL.email}`} className="text-sm text-[#00c4b0] hover:text-[#00d8c8] transition-colors mt-1 inline-block">
               {JOURNAL.email}
             </a>
           </div>
@@ -125,21 +80,21 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-white/10">
         <div className="container py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-white/50">
-            All articles in <em>{JOURNAL.fullName}</em> are licensed under{" "}
-            <a
-              href={JOURNAL.licenseUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white/70 hover:text-[#00b4a0] underline"
-            >
-              {JOURNAL.license}
-            </a>
+          <p className="text-xs text-white/40">
+            &copy; {new Date().getFullYear()} {JOURNAL.publisherEn}. All rights reserved.
           </p>
-          <div className="flex items-center gap-4 text-xs text-white/50">
-            <Link href="/privacy" className="hover:text-white/70 transition-colors">Privacy Policy</Link>
-            <Link href="/cookie" className="hover:text-white/70 transition-colors">Cookie Policy</Link>
-            <Link href="/legal" className="hover:text-white/70 transition-colors">Legal Disclaimer</Link>
+          <div className="flex items-center gap-4 text-xs text-white/40">
+            <a href={JOURNAL.licenseUrl} target="_blank" rel="noopener noreferrer" className="hover:text-white/60 transition-colors">
+              CC BY-NC 4.0
+            </a>
+            <span>|</span>
+            <Link href="/oa-copyright" className="hover:text-white/60 transition-colors">
+              Terms
+            </Link>
+            <span>|</span>
+            <Link href="/publication-ethics" className="hover:text-white/60 transition-colors">
+              Ethics
+            </Link>
           </div>
         </div>
       </div>

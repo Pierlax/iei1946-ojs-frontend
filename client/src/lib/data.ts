@@ -25,6 +25,28 @@ export const JOURNAL = {
   submissionUrl: "https://www.iei1946.it/author-dash/login",
   logoUrl: "https://d2xsxph8kpxj0f.cloudfront.net/109698682/Ybj72GNFScvp3J8KE6MPud/iei-logo_add5cc4c.webp",
   heroUrl: "https://d2xsxph8kpxj0f.cloudfront.net/109698682/Ybj72GNFScvp3J8KE6MPud/iei-hero-background_2104ff9e.png",
+  // Original site images
+  coverRivistaUrl: "https://d2xsxph8kpxj0f.cloudfront.net/109698682/Ybj72GNFScvp3J8KE6MPud/cover-rivista_5e4d5a7e.png",
+  logoCameraUrl: "https://d2xsxph8kpxj0f.cloudfront.net/109698682/Ybj72GNFScvp3J8KE6MPud/logo-camera-color_ed4b6c8a.jpg",
+  logoFooterUrl: "https://d2xsxph8kpxj0f.cloudfront.net/109698682/Ybj72GNFScvp3J8KE6MPud/logo-footer_0a8f42dd.png",
+  logoHeaderUrl: "https://d2xsxph8kpxj0f.cloudfront.net/109698682/Ybj72GNFScvp3J8KE6MPud/logo-header_76aa02ba.png",
+  salaSpecchiUrl: "https://d2xsxph8kpxj0f.cloudfront.net/109698682/Ybj72GNFScvp3J8KE6MPud/sala-specchi_5b721807.jpg",
+  inaugurazione1946Url: "https://d2xsxph8kpxj0f.cloudfront.net/109698682/Ybj72GNFScvp3J8KE6MPud/inaugurazione-1946_f3a32db6.jpg",
+  congresso1948Url: "https://d2xsxph8kpxj0f.cloudfront.net/109698682/Ybj72GNFScvp3J8KE6MPud/congresso-1948_7c69685f.jpg",
+  einaudi1952Url: "https://d2xsxph8kpxj0f.cloudfront.net/109698682/Ybj72GNFScvp3J8KE6MPud/einaudi-1952_78df80a7.jpg",
+  manzittiConvegnoUrl: "https://d2xsxph8kpxj0f.cloudfront.net/109698682/Ybj72GNFScvp3J8KE6MPud/manzitti-convegno_5306b1aa.jpg",
+  galbraith1972Url: "https://d2xsxph8kpxj0f.cloudfront.net/109698682/Ybj72GNFScvp3J8KE6MPud/galbraith-1972_144a981e.jpg",
+  einaudiInaugurazioneUrl: "https://d2xsxph8kpxj0f.cloudfront.net/109698682/Ybj72GNFScvp3J8KE6MPud/einaudi-inaugurazione_5bb9647e.jpg",
+  evento2024Url: "https://d2xsxph8kpxj0f.cloudfront.net/109698682/Ybj72GNFScvp3J8KE6MPud/evento-2024_1690fa02.jpg",
+  premiati2024Url: "https://d2xsxph8kpxj0f.cloudfront.net/109698682/Ybj72GNFScvp3J8KE6MPud/premiati-2024_4a285893.jpg",
+  evento2025Url: "https://d2xsxph8kpxj0f.cloudfront.net/109698682/Ybj72GNFScvp3J8KE6MPud/evento-2025_e1d9135a.jpg",
+  premiati2025Url: "https://d2xsxph8kpxj0f.cloudfront.net/109698682/Ybj72GNFScvp3J8KE6MPud/premiati-2025_e47e7d9e.jpg",
+  numeroSpecialeEinaudiUrl: "https://d2xsxph8kpxj0f.cloudfront.net/109698682/Ybj72GNFScvp3J8KE6MPud/numero-speciale-einaudi_ec02d31a.jpg",
+  evento2023Url: "https://d2xsxph8kpxj0f.cloudfront.net/109698682/Ybj72GNFScvp3J8KE6MPud/evento-2023_6116881e.jpg",
+  mostraGenova1922Url: "https://d2xsxph8kpxj0f.cloudfront.net/109698682/Ybj72GNFScvp3J8KE6MPud/mostra-genova-1922_76f9587c.jpg",
+  premiazione2022Url: "https://d2xsxph8kpxj0f.cloudfront.net/109698682/Ybj72GNFScvp3J8KE6MPud/premiazione-2022_a17d99b5.jpg",
+  relatori2022Url: "https://d2xsxph8kpxj0f.cloudfront.net/109698682/Ybj72GNFScvp3J8KE6MPud/relatori-2022_24ec6542.jpg",
+  evento2022Url: "https://d2xsxph8kpxj0f.cloudfront.net/109698682/Ybj72GNFScvp3J8KE6MPud/evento-2022_127ee898.jpg",
 };
 
 export const EDITORIAL_BOARD = {

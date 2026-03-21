@@ -51,10 +51,10 @@ const GUIDELINES = [
 
 export default function SubmissionGuidelines() {
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="min-h-screen flex flex-col bg-white">
       <Header />
 
-      <section className="bg-[#1a3c5e] py-12 lg:py-16">
+      <section className="bg-[#1b3a5c] py-12 lg:py-16">
         <div className="container">
           <h1 className="font-serif text-3xl lg:text-4xl font-bold text-white">Submission Guidelines</h1>
           <p className="text-white/70 mt-2 text-sm">{JOURNAL.fullName}</p>
@@ -66,7 +66,7 @@ export default function SubmissionGuidelines() {
           <div className="flex flex-col lg:flex-row gap-10">
             {/* Main content */}
             <div className="flex-1 max-w-3xl">
-              <p className="text-sm text-foreground/80 leading-relaxed mb-8">
+              <p className="text-sm text-gray-600 leading-relaxed mb-8">
                 Before submitting your manuscript, please read the following guidelines carefully.
                 Manuscripts that do not conform to these guidelines may be returned to the author(s)
                 without review. Submission is free of charge and no article processing charges (APCs)
@@ -75,14 +75,14 @@ export default function SubmissionGuidelines() {
 
               {GUIDELINES.map((section, idx) => (
                 <section key={idx} className="mb-10">
-                  <h2 className="font-serif text-xl font-bold text-[#1a3c5e] mb-4 pb-2 border-b border-border flex items-center gap-2">
-                    <FileText size={18} className="text-[#00b4a0]" />
+                  <h2 className="font-serif text-xl font-bold text-[#1b3a5c] mb-4 pb-2 border-b border-gray-200 flex items-center gap-2">
+                    <FileText size={18} className="text-[#009e8e]" />
                     {section.title}
                   </h2>
                   <ul className="space-y-3">
                     {section.items.map((item, i) => (
-                      <li key={i} className="flex items-start gap-3 text-sm text-foreground/80 leading-relaxed">
-                        <CheckCircle size={16} className="text-[#00b4a0] shrink-0 mt-0.5" />
+                      <li key={i} className="flex items-start gap-3 text-sm text-gray-600 leading-relaxed">
+                        <CheckCircle size={16} className="text-[#009e8e] shrink-0 mt-0.5" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -91,7 +91,7 @@ export default function SubmissionGuidelines() {
               ))}
 
               {/* Submit CTA */}
-              <div className="bg-[#00b4a0] rounded-lg p-6 text-white mt-8">
+              <div className="bg-[#009e8e] rounded p-6 text-white mt-8">
                 <h2 className="font-serif text-2xl font-bold">Ready to Submit?</h2>
                 <p className="text-white/90 text-sm mt-2 leading-relaxed">
                   Register on our submission platform and follow the steps to submit your manuscript.
@@ -102,7 +102,7 @@ export default function SubmissionGuidelines() {
                     href={JOURNAL.submissionUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-[#00b4a0] text-sm font-bold rounded-md hover:bg-white/90 transition-colors"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-[#009e8e] text-sm font-bold rounded hover:bg-white/90 transition-colors"
                   >
                     SUBMIT NOW <ExternalLink size={14} />
                   </a>
@@ -110,7 +110,7 @@ export default function SubmissionGuidelines() {
                     href={JOURNAL.submissionUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 border border-white/40 text-white text-sm font-medium rounded-md hover:bg-white/10 transition-colors"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 border border-white/40 text-white text-sm font-medium rounded hover:bg-white/10 transition-colors"
                   >
                     Author Login
                   </a>
@@ -120,39 +120,39 @@ export default function SubmissionGuidelines() {
 
             {/* Sidebar */}
             <aside className="lg:w-72 shrink-0 space-y-6">
-              <div className="bg-white rounded-lg border border-border p-5">
-                <h3 className="font-serif text-base font-bold text-[#1a3c5e] mb-3">Key Information</h3>
+              <div className="bg-white border border-gray-200 p-5">
+                <h3 className="font-serif text-base font-bold text-[#1b3a5c] mb-3">Key Information</h3>
                 <div className="space-y-3 text-sm">
                   <div className="flex items-start gap-2">
-                    <span className="w-2 h-2 rounded-full bg-[#00b4a0] shrink-0 mt-1.5" />
-                    <span className="text-foreground/80">Double-blind peer review</span>
+                    <span className="w-2 h-2 rounded-full bg-[#009e8e] shrink-0 mt-1.5" />
+                    <span className="text-gray-600">Double-blind peer review</span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <span className="w-2 h-2 rounded-full bg-[#00b4a0] shrink-0 mt-1.5" />
-                    <span className="text-foreground/80">No submission fees</span>
+                    <span className="w-2 h-2 rounded-full bg-[#009e8e] shrink-0 mt-1.5" />
+                    <span className="text-gray-600">No submission fees</span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <span className="w-2 h-2 rounded-full bg-[#00b4a0] shrink-0 mt-1.5" />
-                    <span className="text-foreground/80">No article processing charges</span>
+                    <span className="w-2 h-2 rounded-full bg-[#009e8e] shrink-0 mt-1.5" />
+                    <span className="text-gray-600">No article processing charges</span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <span className="w-2 h-2 rounded-full bg-[#00b4a0] shrink-0 mt-1.5" />
-                    <span className="text-foreground/80">Fully Open Access</span>
+                    <span className="w-2 h-2 rounded-full bg-[#009e8e] shrink-0 mt-1.5" />
+                    <span className="text-gray-600">Fully Open Access</span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <span className="w-2 h-2 rounded-full bg-[#00b4a0] shrink-0 mt-1.5" />
-                    <span className="text-foreground/80">~10 weeks to decision</span>
+                    <span className="w-2 h-2 rounded-full bg-[#009e8e] shrink-0 mt-1.5" />
+                    <span className="text-gray-600">~10 weeks to decision</span>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-white rounded-lg border border-border p-5">
-                <h3 className="font-serif text-base font-bold text-[#1a3c5e] mb-3">Related Pages</h3>
+              <div className="bg-white border border-gray-200 p-5">
+                <h3 className="font-serif text-base font-bold text-[#1b3a5c] mb-3">Related Pages</h3>
                 <nav className="flex flex-col gap-2 text-sm">
-                  <a href="/about" className="text-[#00b4a0] hover:underline">About the Review</a>
-                  <a href="/oa-copyright" className="text-[#00b4a0] hover:underline">OA & Copyright</a>
-                  <a href="/publication-ethics" className="text-[#00b4a0] hover:underline">Publication Ethics</a>
-                  <a href="/editorial-board" className="text-[#00b4a0] hover:underline">Editorial Board</a>
+                  <a href="/about" className="text-[#009e8e] hover:underline">About the Review</a>
+                  <a href="/oa-copyright" className="text-[#009e8e] hover:underline">OA & Copyright</a>
+                  <a href="/publication-ethics" className="text-[#009e8e] hover:underline">Publication Ethics</a>
+                  <a href="/editorial-board" className="text-[#009e8e] hover:underline">Editorial Board</a>
                 </nav>
               </div>
             </aside>

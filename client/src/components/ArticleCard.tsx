@@ -1,10 +1,10 @@
 // ============================================================
-// ArticleCard Component - IEI 1946
-// Displays article metadata in a clean, academic card format
+// ArticleCard Component - Elsevier/ScienceDirect Style
+// Clean list-based layout, navy #1b3a5c, teal #009e8e
 // ============================================================
 
 import { Link } from "wouter";
-import { FileText, ExternalLink } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import type { Article } from "@/lib/data";
 
 interface ArticleCardProps {
@@ -14,18 +14,18 @@ interface ArticleCardProps {
 
 export default function ArticleCard({ article, variant = "default" }: ArticleCardProps) {
   const authorNames = article.authors.map((a) => a.name).join(", ");
-  const volumeInfo = `Volume ${article.volume}${article.issue ? ` - Issue ${article.issue}` : ""}, ${article.month} ${article.year}`;
+  const volumeInfo = `Volume ${article.volume}${article.issue ? `, Issue ${article.issue}` : ""}, ${article.month} ${article.year}`;
 
   if (variant === "compact") {
     return (
       <Link href={`/article/${article.id}`} className="block group">
-        <div className="py-4 border-b border-border last:border-b-0 hover:bg-secondary/30 px-4 -mx-4 transition-colors">
-          <h4 className="font-serif text-base font-semibold text-[#1a3c5e] group-hover:text-[#00b4a0] transition-colors leading-snug">
+        <div className="py-3 border-b border-gray-100 last:border-b-0 hover:bg-gray-50/50 px-3 -mx-3 transition-colors">
+          <h4 className="font-serif text-sm font-semibold text-[#1b3a5c] group-hover:text-[#009e8e] transition-colors leading-snug">
             {article.title}
           </h4>
-          <p className="text-sm text-muted-foreground mt-1">{authorNames}</p>
+          <p className="text-xs text-gray-500 mt-1">{authorNames}</p>
           {article.pages && (
-            <p className="text-xs text-muted-foreground mt-1">pp. {article.pages}</p>
+            <p className="text-xs text-gray-400 mt-0.5">pp. {article.pages}</p>
           )}
         </div>
       </Link>
@@ -35,31 +35,36 @@ export default function ArticleCard({ article, variant = "default" }: ArticleCar
   if (variant === "featured") {
     return (
       <Link href={`/article/${article.id}`} className="block group">
-        <div className="bg-white rounded-lg border border-border p-6 hover:shadow-md transition-all duration-200 hover:border-[#00b4a0]/30">
+        <div className="py-5 border-b border-gray-200 last:border-b-0 hover:bg-gray-50/50 transition-colors">
           <div className="flex items-start gap-4">
-            <div className="hidden sm:flex w-12 h-12 rounded-lg bg-[#00b4a0]/10 items-center justify-center shrink-0">
-              <FileText size={20} className="text-[#00b4a0]" />
-            </div>
+            {/* Green left accent bar */}
+            <div className="w-1 self-stretch bg-[#009e8e] rounded-full shrink-0 hidden sm:block" />
             <div className="flex-1">
-              <h3 className="font-serif text-lg font-bold text-[#1a3c5e] group-hover:text-[#00b4a0] transition-colors leading-snug">
+              <h3 className="font-serif text-lg font-bold text-[#1b3a5c] group-hover:text-[#009e8e] transition-colors leading-snug">
                 {article.title}
               </h3>
-              <p className="text-sm font-medium text-[#1a3c5e]/80 mt-2">{authorNames}</p>
-              <p className="text-xs text-muted-foreground mt-1">{volumeInfo}</p>
+              <p className="text-sm text-[#1b3a5c]/70 mt-1.5">{authorNames}</p>
+              <p className="text-xs text-gray-400 mt-1">{volumeInfo}</p>
               {article.abstract && (
-                <p className="text-sm text-muted-foreground mt-3 line-clamp-3 leading-relaxed">
+                <p className="text-sm text-gray-500 mt-3 line-clamp-3 leading-relaxed">
                   {article.abstract}
                 </p>
               )}
               <div className="flex flex-wrap items-center gap-3 mt-3">
                 {article.doi && (
-                  <span className="inline-flex items-center gap-1 text-xs text-[#00b4a0] font-medium">
-                    DOI: {article.doi}
-                  </span>
+                  <a
+                    href={`https://doi.org/${article.doi}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="inline-flex items-center gap-1 text-xs text-[#009e8e] font-medium hover:underline"
+                  >
+                    DOI: {article.doi} <ExternalLink size={10} />
+                  </a>
                 )}
                 {article.jel && article.jel.length > 0 && (
-                  <span className="text-xs text-muted-foreground">
-                    JEL: {article.jel.join("; ")}
+                  <span className="text-xs text-gray-400">
+                    JEL: {article.jel.join(", ")}
                   </span>
                 )}
               </div>
@@ -68,7 +73,7 @@ export default function ArticleCard({ article, variant = "default" }: ArticleCar
                   {article.keywords.map((kw) => (
                     <span
                       key={kw}
-                      className="px-2 py-0.5 text-xs bg-secondary rounded-full text-secondary-foreground"
+                      className="px-2 py-0.5 text-xs bg-gray-100 text-gray-600 rounded"
                     >
                       {kw}
                     </span>
@@ -82,33 +87,33 @@ export default function ArticleCard({ article, variant = "default" }: ArticleCar
     );
   }
 
-  // Default variant
+  // Default variant - Elsevier list style
   return (
     <Link href={`/article/${article.id}`} className="block group">
-      <article className="bg-white rounded-lg border border-border p-5 hover:shadow-md transition-all duration-200 hover:border-[#00b4a0]/30">
-        <h3 className="font-serif text-base font-bold text-[#1a3c5e] group-hover:text-[#00b4a0] transition-colors leading-snug">
+      <article className="py-4 border-b border-gray-200 last:border-b-0 hover:bg-gray-50/50 transition-colors">
+        <h3 className="font-serif text-base font-bold text-[#1b3a5c] group-hover:text-[#009e8e] transition-colors leading-snug">
           {article.title}
         </h3>
-        <p className="text-sm font-medium text-[#1a3c5e]/80 mt-2">{authorNames}</p>
-        <p className="text-xs text-muted-foreground mt-1">{volumeInfo}</p>
+        <p className="text-sm text-[#1b3a5c]/70 mt-1.5">{authorNames}</p>
+        <p className="text-xs text-gray-400 mt-1">{volumeInfo}</p>
         {article.pages && (
-          <p className="text-xs text-muted-foreground">(pp. {article.pages})</p>
+          <p className="text-xs text-gray-400">pp. {article.pages}</p>
         )}
-        <div className="flex flex-wrap items-center gap-3 mt-3">
+        <div className="flex flex-wrap items-center gap-3 mt-2">
           {article.doi && (
             <a
               href={`https://doi.org/${article.doi}`}
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="inline-flex items-center gap-1 text-xs text-[#00b4a0] font-medium hover:underline"
+              className="inline-flex items-center gap-1 text-xs text-[#009e8e] font-medium hover:underline"
             >
               DOI: {article.doi} <ExternalLink size={10} />
             </a>
           )}
           {article.jel && article.jel.length > 0 && (
-            <span className="text-xs text-muted-foreground">
-              JEL: {article.jel.join("; ")}
+            <span className="text-xs text-gray-400">
+              JEL: {article.jel.join(", ")}
             </span>
           )}
         </div>
@@ -117,7 +122,7 @@ export default function ArticleCard({ article, variant = "default" }: ArticleCar
             {article.keywords.map((kw) => (
               <span
                 key={kw}
-                className="px-2 py-0.5 text-xs bg-secondary rounded-full text-secondary-foreground"
+                className="px-2 py-0.5 text-xs bg-gray-100 text-gray-600 rounded"
               >
                 {kw}
               </span>
