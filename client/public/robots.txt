@@ -1,0 +1,1 @@
+User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /private\n\nSitemap: https://iei1946.vercel.app/sitemap.xml\nCrawl-delay: 1\n

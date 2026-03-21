@@ -5,13 +5,21 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
+import ArticleDetail from "./pages/ArticleDetail";
 
+// Design System: Institutional Elegance
+// - Primary Color: Institutional Green (#00a86b)
+// - Secondary Color: Dark Slate (#1e3a5f)
+// - Typography: Merriweather (serif) for headers, Inter (sans-serif) for body
+// - Layout: Asymmetric grid with prominent article focus
+// - Interactions: Smooth, academic, purposeful animations
 
 function Router() {
   return (
     <Switch>
-      <Route path={"/"} component={Home} />
-      <Route path={"/404"} component={NotFound} />
+      <Route path="/" component={Home} />
+      <Route path="/article/:id" component={ArticleDetail} />
+      <Route path="/404" component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
     </Switch>
