@@ -1,1 +1,25 @@
-{\n  "version": 2,\n  "buildCommand": "pnpm build",\n  "devCommand": "pnpm dev",\n  "installCommand": "pnpm install",\n  "framework": "vite",\n  "env": {\n    "REACT_APP_OJS_BASE_URL": "@ojs_base_url"\n  },\n  "headers": [\n    {\n      "source": "/api/(.*)",\n      "headers": [\n        {\n          "key": "Cache-Control",\n          "value": "public, s-maxage=3600, stale-while-revalidate=86400"\n        }\n      ]\n    },\n    {\n      "source": "/(.*)",\n      "headers": [\n        {\n          "key": "X-Content-Type-Options",\n          "value": "nosniff"\n        },\n        {\n          "key": "X-Frame-Options",\n          "value": "SAMEORIGIN"\n        },\n        {\n          "key": "X-XSS-Protection",\n          "value": "1; mode=block"\n        },\n        {\n          "key": "Referrer-Policy",\n          "value": "strict-origin-when-cross-origin"\n        }\n      ]\n    }\n  ],\n  "rewrites": [\n    {\n      "source": "/(.*)",\n      "destination": "/index.html"\n    }\n  ]\n}\n
+{
+  "version": 2,
+  "buildCommand": "pnpm build",
+  "devCommand": "pnpm dev",
+  "installCommand": "pnpm install",
+  "framework": "vite",
+  "env": {
+    "VITE_OJS_BASE_URL": "@ojs_base_url",
+    "VITE_OJS_JOURNAL_PATH": "@ojs_journal_path"
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "X-XSS-Protection", "value": "1; mode=block" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+      ]
+    }
+  ],
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}

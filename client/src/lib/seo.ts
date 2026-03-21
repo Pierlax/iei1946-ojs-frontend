@@ -16,15 +16,17 @@ export interface SEOMetadata {
 }
 
 export const defaultSEO: SEOMetadata = {
-  title: "Economia Internazionale - Rivista Accademica",
+  title: "Economia Internazionale / International Economics",
   description:
-    "Una rivista accademica peer-reviewed dedicata all'analisi critica delle dinamiche economiche globali, con focus su commercio internazionale, finanza e politica economica.",
+    "A peer-reviewed, open access journal committed to advancing scholarly research on the economics of open economies. Published by the Chamber of Commerce of Genova since 1948.",
   keywords: [
-    "economia internazionale",
-    "commercio internazionale",
-    "finanza globale",
-    "politica economica",
-    "ricerca accademica",
+    "international economics",
+    "open access journal",
+    "peer-reviewed",
+    "international trade",
+    "macroeconomics",
+    "international finance",
+    "economic policy",
   ],
   type: "website",
 };

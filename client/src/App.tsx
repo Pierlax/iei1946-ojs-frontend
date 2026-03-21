@@ -6,38 +6,57 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import ArticleDetail from "./pages/ArticleDetail";
+import { lazy, Suspense } from "react";
+
+// Lazy-loaded pages
+const Review = lazy(() => import("./pages/Review"));
+const Institute = lazy(() => import("./pages/Institute"));
+const About = lazy(() => import("./pages/About"));
+const SubmissionGuidelines = lazy(() => import("./pages/SubmissionGuidelines"));
+const OACopyright = lazy(() => import("./pages/OACopyright"));
+const PublicationEthics = lazy(() => import("./pages/PublicationEthics"));
+const Contacts = lazy(() => import("./pages/Contacts"));
+const EditorialBoard = lazy(() => import("./pages/EditorialBoard"));
 
 // Design System: Institutional Elegance
-// - Primary Color: Institutional Green (#00a86b)
-// - Secondary Color: Dark Slate (#1e3a5f)
-// - Typography: Merriweather (serif) for headers, Inter (sans-serif) for body
-// - Layout: Asymmetric grid with prominent article focus
-// - Interactions: Smooth, academic, purposeful animations
+// - Primary: Dark Navy (#1a3c5e)
+// - Accent: Teal (#00b4a0)
+// - Typography: Playfair Display (serif headers), Source Sans 3 (body)
+// - Layout: Academic journal with sidebar navigation
 
-function Router() {
+function PageLoader() {
   return (
-    <Switch>
-      <Route path="/" component={Home} />
-      <Route path="/article/:id" component={ArticleDetail} />
-      <Route path="/404" component={NotFound} />
-      {/* Final fallback route */}
-      <Route component={NotFound} />
-    </Switch>
+    <div className="min-h-screen flex items-center justify-center bg-background">
+      <div className="w-8 h-8 border-2 border-[#00b4a0] border-t-transparent rounded-full animate-spin" />
+    </div>
   );
 }
 
-// NOTE: About Theme
-// - First choose a default theme according to your design style (dark or light bg), than change color palette in index.css
-//   to keep consistent foreground/background color across components
-// - If you want to make theme switchable, pass `switchable` ThemeProvider and use `useTheme` hook
+function Router() {
+  return (
+    <Suspense fallback={<PageLoader />}>
+      <Switch>
+        <Route path="/" component={Home} />
+        <Route path="/article/:id" component={ArticleDetail} />
+        <Route path="/review" component={Review} />
+        <Route path="/institute" component={Institute} />
+        <Route path="/about" component={About} />
+        <Route path="/submission-guidelines" component={SubmissionGuidelines} />
+        <Route path="/oa-copyright" component={OACopyright} />
+        <Route path="/publication-ethics" component={PublicationEthics} />
+        <Route path="/contacts" component={Contacts} />
+        <Route path="/editorial-board" component={EditorialBoard} />
+        <Route path="/404" component={NotFound} />
+        <Route component={NotFound} />
+      </Switch>
+    </Suspense>
+  );
+}
 
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider
-        defaultTheme="light"
-        // switchable
-      >
+      <ThemeProvider defaultTheme="light">
         <TooltipProvider>
           <Toaster />
           <Router />
