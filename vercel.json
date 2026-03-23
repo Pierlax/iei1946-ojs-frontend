@@ -4,10 +4,6 @@
   "devCommand": "pnpm dev",
   "installCommand": "pnpm install",
   "framework": "vite",
-  "env": {
-    "VITE_OJS_BASE_URL": "@ojs_base_url",
-    "VITE_OJS_JOURNAL_PATH": "@ojs_journal_path"
-  },
   "headers": [
     {
       "source": "/(.*)",
