@@ -30,7 +30,7 @@ export default function Header() {
           </div>
           <div className="flex items-center gap-5">
             <a
-              href={JOURNAL.submissionUrl}
+              href={JOURNAL.loginUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-[#00c4b0] transition-colors flex items-center gap-1.5 font-semibold"
@@ -225,7 +225,7 @@ export default function Header() {
               </div>
               <div className="border-t border-gray-100 mt-2 pt-2 flex flex-col gap-1">
                 <a
-                  href={JOURNAL.submissionUrl}
+                  href={JOURNAL.loginUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-3 py-3 text-sm font-semibold text-[#009e8e]"

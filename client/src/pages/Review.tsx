@@ -63,9 +63,9 @@ export default function Review() {
           <span className="text-border">|</span>
           <Link href="/submission-guidelines" className="text-gray-500 hover:text-[#009e8e] whitespace-nowrap">Submit a Paper</Link>
           <span className="text-border">|</span>
-          <a href={JOURNAL.submissionUrl} target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-[#009e8e] whitespace-nowrap">Register</a>
+          <a href={JOURNAL.registerUrl} target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-[#009e8e] whitespace-nowrap">Register</a>
           <span className="text-border">|</span>
-          <a href={JOURNAL.submissionUrl} target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-[#009e8e] whitespace-nowrap">Authors Login</a>
+          <a href={JOURNAL.loginUrl} target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-[#009e8e] whitespace-nowrap">Authors Login</a>
         </div>
       </div>
 
@@ -304,7 +304,7 @@ export default function Review() {
                 <p className="text-sm text-gray-500 leading-relaxed mb-4">
                   First-time users should click on "Register" and enter the requested information.
                 </p>
-                <a href={JOURNAL.submissionUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center w-full gap-2 px-4 py-2.5 bg-[#009e8e] text-white text-sm font-bold rounded hover:bg-[#008a7c] transition-colors">
+                <a href={JOURNAL.registerUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center w-full gap-2 px-4 py-2.5 bg-[#009e8e] text-white text-sm font-bold rounded hover:bg-[#008a7c] transition-colors">
                   REGISTER <ExternalLink size={14} />
                 </a>
               </div>
@@ -315,7 +315,7 @@ export default function Review() {
                 <p className="text-sm text-gray-500 leading-relaxed mb-4">
                   Use the assigned user ID and password to login.
                 </p>
-                <a href={JOURNAL.submissionUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center w-full gap-2 px-4 py-2.5 bg-[#1b3a5c] text-white text-sm font-bold rounded hover:bg-[#152e4a] transition-colors">
+                <a href={JOURNAL.loginUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center w-full gap-2 px-4 py-2.5 bg-[#1b3a5c] text-white text-sm font-bold rounded hover:bg-[#152e4a] transition-colors">
                   LOGIN <ExternalLink size={14} />
                 </a>
               </div>

@@ -22,7 +22,9 @@ export const JOURNAL = {
   license: "Creative Commons Attribution-NonCommercial 4.0 International",
   licenseUrl: "https://creativecommons.org/licenses/by-nc/4.0/",
   ojsBaseUrl: "https://ojs.iei1946.it",
-  submissionUrl: "https://www.iei1946.it/author-dash/login",
+  submissionUrl: "https://ojs.iei1946.it/index.php/iei/submission",
+  loginUrl: "https://ojs.iei1946.it/index.php/iei/login",
+  registerUrl: "https://ojs.iei1946.it/index.php/iei/user/register",
   logoUrl: "https://d2xsxph8kpxj0f.cloudfront.net/109698682/Ybj72GNFScvp3J8KE6MPud/iei-logo_add5cc4c.webp",
   heroUrl: "https://d2xsxph8kpxj0f.cloudfront.net/109698682/Ybj72GNFScvp3J8KE6MPud/iei-hero-background_2104ff9e.png",
   // Original site images
@@ -61,7 +63,7 @@ export const EDITORIAL_BOARD = {
     "Paolo Guerrieri Paleotti", "Carsten Hefeker", "Arye L. Hillman", "Claudio Impenna",
     "Miroslav N. Jovanovic", "Rainer Masera", "Giuseppe Mastromatteo", "Juan Carlos Moreno-Brid",
     "Gianmarco Ottaviano", "Piercarlo Padoan", "Martin Paldam", "Angelo Panebianco",
-    "Carlo Panico", "Giovanni Battista Pittaluga", "Martin Puchet Anyul", "Alessio Reghezza",
+    "Carlo Panico", "Martin Puchet Anyul", "Alessio Reghezza",
     "Sergio Rossi", "Laura Sabani", "Paolo Savona", "Vito Tanzi", "John Thornton",
   ],
 };
@@ -88,6 +90,71 @@ export const FOUNDERS = [
 
 export const INDEXING = [
   "RePEc", "Crossref", "Econpapers", "Econlit", "Google Scholar",
+];
+
+export interface BlogEvent {
+  id: number;
+  date: string;
+  title: string;
+  description?: string;
+  location?: string;
+  time?: string;
+}
+
+export const BLOG_EVENTS: BlogEvent[] = [
+  {
+    id: 1,
+    date: "2026-03-04",
+    title: "Economia tra realtà e illusioni. Conti pubblici, crescita e scelte possibili in un mondo che cambia",
+    description: "Evento organizzato dall'Istituto di Economia Internazionale.",
+  },
+  {
+    id: 2,
+    date: "2026-02-26",
+    title: "Sviluppo sostenibile: quadro giuridico, regole e mercato",
+    location: "Camera di Commercio di Genova, Via Garibaldi 4, Salone del Consiglio",
+  },
+  {
+    id: 3,
+    date: "2025-11-28",
+    title: "Premi Economia Internazionale e Francesco Manzitti 2025 - Motivazioni e interviste",
+    description: "Cerimonia di premiazione con la Prof.ssa Mazzucato e il Dott. Pompili.",
+  },
+  {
+    id: 4,
+    date: "2025-11-28",
+    title: "La politica industriale italiana nell'era della competizione globale: analisi e riflessioni",
+    location: "Palazzo della Borsa Valori di Genova, Via XX Settembre 44",
+    time: "15:00",
+  },
+  {
+    id: 5,
+    date: "2025-06-27",
+    title: "ITALIA MESSICO 1940 - 2025",
+    location: "Camera di Commercio di Genova",
+    time: "10:30",
+  },
+  {
+    id: 6,
+    date: "2025-06-26",
+    title: "Scenario competitivo, ESG e innovazione strategica per la creazione di valore nelle medie imprese industriali italiane",
+  },
+  {
+    id: 7,
+    date: "2025-05-15",
+    title: "COME CAMBIA L'ORDINE INTERNAZIONALE CON TRUMP?",
+    description: "Analisi dell'impatto della presidenza Trump sull'internazionalizzazione.",
+  },
+  {
+    id: 8,
+    date: "2025-04-29",
+    title: "IL NUOVO CORSO DELLA POLITICA MONETARIA",
+  },
+  {
+    id: 9,
+    date: "2025-03-18",
+    title: "INFLAZIONE E AUSTERITÀ FISCALE. Quale lezione dalla storia della Repubblica di Weimar?",
+  },
 ];
 
 export interface Article {
@@ -281,6 +348,7 @@ export const NAV_ITEMS = [
   { label: "Home", path: "/" },
   { label: "Review", path: "/review" },
   { label: "Institute", path: "/institute" },
+  { label: "News & Events", path: "/blog" },
   { label: "Contacts", path: "/contacts" },
   { label: "OA & Copyright", path: "/oa-copyright" },
   { label: "Publication Ethics", path: "/publication-ethics" },

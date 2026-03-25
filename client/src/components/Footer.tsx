@@ -5,6 +5,7 @@
 
 import { Link } from "wouter";
 import { JOURNAL, INDEXING } from "@/lib/data";
+import { Facebook, Twitter, Linkedin, Youtube } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -37,6 +38,7 @@ export default function Footer() {
               <li><Link href="/about" className="text-sm text-white/60 hover:text-[#00c4b0] transition-colors">About the Review</Link></li>
               <li><Link href="/editorial-board" className="text-sm text-white/60 hover:text-[#00c4b0] transition-colors">Editorial Board</Link></li>
               <li><Link href="/institute" className="text-sm text-white/60 hover:text-[#00c4b0] transition-colors">Institute</Link></li>
+              <li><Link href="/blog" className="text-sm text-white/60 hover:text-[#00c4b0] transition-colors">News & Events</Link></li>
             </ul>
           </div>
 
@@ -46,7 +48,7 @@ export default function Footer() {
             <ul className="space-y-2.5">
               <li><Link href="/submission-guidelines" className="text-sm text-white/60 hover:text-[#00c4b0] transition-colors">Submission Guidelines</Link></li>
               <li>
-                <a href={JOURNAL.submissionUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-white/60 hover:text-[#00c4b0] transition-colors">
+                <a href={JOURNAL.loginUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-white/60 hover:text-[#00c4b0] transition-colors">
                   Author Login
                 </a>
               </li>
@@ -83,16 +85,29 @@ export default function Footer() {
           <p className="text-xs text-white/40">
             &copy; {new Date().getFullYear()} {JOURNAL.publisherEn}. All rights reserved.
           </p>
-          <div className="flex items-center gap-4 text-xs text-white/40">
-            <a href={JOURNAL.licenseUrl} target="_blank" rel="noopener noreferrer" className="hover:text-white/60 transition-colors">
+          <div className="flex items-center gap-3">
+            <a href="https://www.facebook.com/iei1946" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-[#00c4b0] transition-colors" aria-label="Facebook">
+              <Facebook size={15} />
+            </a>
+            <a href="https://twitter.com/iei1946" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-[#00c4b0] transition-colors" aria-label="X / Twitter">
+              <Twitter size={15} />
+            </a>
+            <a href="https://www.linkedin.com/company/iei1946" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-[#00c4b0] transition-colors" aria-label="LinkedIn">
+              <Linkedin size={15} />
+            </a>
+            <a href="https://www.youtube.com/@iei1946" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-[#00c4b0] transition-colors" aria-label="YouTube">
+              <Youtube size={15} />
+            </a>
+            <span className="text-white/20 mx-1">|</span>
+            <a href={JOURNAL.licenseUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-white/40 hover:text-white/60 transition-colors">
               CC BY-NC 4.0
             </a>
-            <span>|</span>
-            <Link href="/oa-copyright" className="hover:text-white/60 transition-colors">
+            <span className="text-white/20">|</span>
+            <Link href="/oa-copyright" className="text-xs text-white/40 hover:text-white/60 transition-colors">
               Terms
             </Link>
-            <span>|</span>
-            <Link href="/publication-ethics" className="hover:text-white/60 transition-colors">
+            <span className="text-white/20">|</span>
+            <Link href="/publication-ethics" className="text-xs text-white/40 hover:text-white/60 transition-colors">
               Ethics
             </Link>
           </div>

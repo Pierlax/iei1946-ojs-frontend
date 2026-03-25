@@ -107,7 +107,7 @@ export default function SubmissionGuidelines() {
                     SUBMIT NOW <ExternalLink size={14} />
                   </a>
                   <a
-                    href={JOURNAL.submissionUrl}
+                    href={JOURNAL.loginUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 px-5 py-2.5 border border-white/40 text-white text-sm font-medium rounded hover:bg-white/10 transition-colors"

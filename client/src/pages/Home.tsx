@@ -348,7 +348,7 @@ export default function Home() {
                   Upon successful registration, you will receive an e-mail with instructions.
                 </p>
                 <a
-                  href={JOURNAL.submissionUrl}
+                  href={JOURNAL.registerUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center w-full gap-2 px-4 py-2 bg-[#009e8e] text-white text-sm font-bold rounded hover:bg-[#008a7c] transition-colors"
@@ -377,17 +377,17 @@ export default function Home() {
                     placeholder="Email"
                     className="w-full px-3 py-2 text-sm border border-gray-300 rounded bg-white focus:outline-none focus:border-[#009e8e]"
                     readOnly
-                    onFocus={() => window.open(JOURNAL.submissionUrl, "_blank")}
+                    onFocus={() => window.open(JOURNAL.loginUrl, "_blank")}
                   />
                   <input
                     type="password"
                     placeholder="Password"
                     className="w-full px-3 py-2 text-sm border border-gray-300 rounded bg-white focus:outline-none focus:border-[#009e8e]"
                     readOnly
-                    onFocus={() => window.open(JOURNAL.submissionUrl, "_blank")}
+                    onFocus={() => window.open(JOURNAL.loginUrl, "_blank")}
                   />
                   <a
-                    href={JOURNAL.submissionUrl}
+                    href={JOURNAL.loginUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center w-full gap-2 px-4 py-2 bg-[#1b3a5c] text-white text-sm font-bold rounded hover:bg-[#152e4a] transition-colors"
@@ -396,7 +396,7 @@ export default function Home() {
                   </a>
                 </div>
                 <a
-                  href={JOURNAL.submissionUrl}
+                  href={JOURNAL.loginUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block text-center text-xs text-gray-400 mt-2 hover:text-[#009e8e]"
