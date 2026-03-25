@@ -197,7 +197,40 @@
     .container {
       padding-left: 2rem;
       padding-right: 2rem;
-      max-width: 1280px;
+      max-width: 1200px;
     }
+  }
+
+  /* ScienceDirect-style article card shadow on hover */
+  .article-card-hover {
+    transition: box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+  .article-card-hover:hover {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    border-color: #009e8e;
+  }
+
+  /* Open Access badge — Elsevier green */
+  .badge-oa {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 700;
+    background: #00a651;
+    color: white;
+    border-radius: 3px;
+    letter-spacing: 0.02em;
+  }
+
+  /* ScienceDirect-style DOI link */
+  .doi-link {
+    color: #0066cc;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .doi-link:hover {
+    text-decoration: underline;
   }
 }
