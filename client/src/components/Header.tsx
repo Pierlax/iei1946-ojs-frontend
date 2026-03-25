@@ -52,7 +52,7 @@ export default function Header() {
             <img
               src={JOURNAL.logoHeaderUrl}
               alt="IEI Logo"
-              className="h-10 w-auto hidden sm:block brightness-0 invert"
+              className="h-[60px] w-auto hidden sm:block brightness-0 invert"
             />
             <div className="flex flex-col leading-tight">
               <span className="font-serif text-xl lg:text-2xl font-bold tracking-tight">
