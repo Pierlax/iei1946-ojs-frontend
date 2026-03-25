@@ -281,7 +281,7 @@ export default function ArticleDetail() {
                           window.open(article.pdfUrl, "_blank");
                         } else {
                           window.open(
-                            `${JOURNAL.submissionUrl}/index.php/iei/article/view/${article.id}`,
+                            `${JOURNAL.ojsBaseUrl}/index.php/iei/article/view/${article.id}`,
                             "_blank"
                           );
                         }

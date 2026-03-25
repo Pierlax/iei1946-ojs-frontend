@@ -40,6 +40,14 @@ export default function Review() {
   const [searchAuthor, setSearchAuthor] = useState("");
   const [searchKeyword, setSearchKeyword] = useState("");
 
+  const handleSearch = () => {
+    const params = new URLSearchParams();
+    if (searchYear) params.set("year", searchYear);
+    if (searchAuthor) params.set("author", searchAuthor);
+    if (searchKeyword) params.set("keyword", searchKeyword);
+    window.location.href = `/review?${params.toString()}`;
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <Header />
@@ -83,7 +91,7 @@ export default function Review() {
             <input type="text" placeholder="Year" value={searchYear} onChange={(e) => setSearchYear(e.target.value)} className="flex-1 px-3 py-2 text-sm border border-gray-200 rounded-md bg-input focus:outline-none focus:ring-2 focus:ring-[#009e8e]/30" />
             <input type="text" placeholder="Author" value={searchAuthor} onChange={(e) => setSearchAuthor(e.target.value)} className="flex-1 px-3 py-2 text-sm border border-gray-200 rounded-md bg-input focus:outline-none focus:ring-2 focus:ring-[#009e8e]/30" />
             <input type="text" placeholder="Keyword" value={searchKeyword} onChange={(e) => setSearchKeyword(e.target.value)} className="flex-1 px-3 py-2 text-sm border border-gray-200 rounded-md bg-input focus:outline-none focus:ring-2 focus:ring-[#009e8e]/30" />
-            <button className="px-5 py-2 bg-[#009e8e] text-white text-sm font-semibold rounded hover:bg-[#008a7c] transition-colors">Search</button>
+            <button onClick={handleSearch} className="px-5 py-2 bg-[#009e8e] text-white text-sm font-semibold rounded hover:bg-[#008a7c] transition-colors">Search</button>
           </div>
         </div>
       </section>
