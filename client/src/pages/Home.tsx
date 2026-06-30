@@ -1,7 +1,7 @@
 // ============================================================
 // Homepage - IEI 1946
-// Design: Elsevier/ScienceDirect Layout + IEI Colors
-// Navy #1b3a5c, Teal #009e8e
+// Pulls current issue + recent articles from OJS via /api/ojs.
+// Static content limited to journal identity, scope, editorial board.
 // ============================================================
 
 import { useState } from "react";
@@ -13,23 +13,18 @@ import {
   JOURNAL,
   EDITORIAL_BOARD,
   REVIEW_METRICS,
-  CURRENT_ISSUE as FALLBACK_ISSUE,
-  EDITORS_CHOICE,
   AIMS_AND_SCOPE,
   CALL_FOR_PAPERS,
   type Article,
 } from "@/lib/data";
-import { useCurrentIssueArticles } from "@/hooks/useOJS";
+import { useCurrentIssueArticles, useRecentArticles } from "@/hooks/useOJS";
 import {
   BookOpen,
   Send,
-  FileText,
   ArrowRight,
   Search,
   ExternalLink,
   ChevronRight,
-  Clock,
-  Award,
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -39,19 +34,20 @@ const fadeUp = {
 };
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState<"current" | "editors" | "recent">("current");
+  const [activeTab, setActiveTab] = useState<"current" | "recent">("current");
   const [searchYear, setSearchYear] = useState("");
   const [searchAuthor, setSearchAuthor] = useState("");
   const [searchKeyword, setSearchKeyword] = useState("");
 
-  const { data: liveIssue, loading: issueLoading, error: issueError } = useCurrentIssueArticles();
-  const issueLabel = liveIssue
+  const { data: liveIssue, loading: issueLoading } = useCurrentIssueArticles();
+  const { data: recentArticlesRaw, loading: recentLoading } = useRecentArticles(5);
+
+  const currentArticles: Article[] = (liveIssue?.articles || []) as unknown as Article[];
+  const recentArticles: Article[] = (recentArticlesRaw || []) as unknown as Article[];
+
+  const issueLabel = liveIssue?.issue
     ? `Vol. ${liveIssue.issue.volume ?? "?"}${liveIssue.issue.number ? `, No. ${liveIssue.issue.number}` : ""}${liveIssue.issue.year ? `, ${liveIssue.issue.year}` : ""}`
-    : `${FALLBACK_ISSUE.year}`;
-  const currentArticles: Article[] = liveIssue?.articles?.length
-    ? (liveIssue.articles as unknown as Article[])
-    : (FALLBACK_ISSUE.articles as Article[]);
-  const isLiveData = !!liveIssue?.articles?.length;
+    : "—";
 
   const handleSearch = () => {
     const params = new URLSearchParams();
@@ -65,11 +61,9 @@ export default function Home() {
     <div className="min-h-screen flex flex-col bg-background">
       <Header />
 
-      {/* Hero Section - Elsevier style with journal cover */}
       <section className="bg-white border-b border-gray-200">
         <div className="container py-10 lg:py-16">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            {/* Cover image */}
             <div className="lg:col-span-2 hidden lg:block">
               <img
                 src={JOURNAL.coverRivistaUrl}
@@ -78,7 +72,6 @@ export default function Home() {
               />
             </div>
 
-            {/* Journal info - Elsevier style */}
             <div className="lg:col-span-6">
               <motion.div initial="hidden" animate="visible" variants={fadeUp}>
                 <h1 className="font-serif text-3xl lg:text-4xl font-bold text-[#1b3a5c] leading-tight">
@@ -123,7 +116,6 @@ export default function Home() {
               </motion.div>
             </div>
 
-            {/* Right sidebar: Submit card */}
             <div className="lg:col-span-4">
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
@@ -158,7 +150,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Search Bar - Elsevier style */}
       <section className="bg-gray-50 border-b border-gray-200">
         <div className="container py-4">
           <div className="flex flex-col sm:flex-row items-stretch gap-2">
@@ -197,11 +188,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Three-column info: Aims & Scope, Call for Papers, Current Issue */}
       <section className="bg-white py-12 lg:py-16">
         <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
-            {/* Aims & Scope */}
             <div>
               <div className="accent-bar" />
               <p className="text-xs font-bold uppercase tracking-wider text-[#009e8e] mb-1">Review</p>
@@ -217,7 +206,6 @@ export default function Home() {
               </Link>
             </div>
 
-            {/* Call for Papers */}
             <div>
               <div className="accent-bar" />
               <p className="text-xs font-bold uppercase tracking-wider text-[#009e8e] mb-1">Announcements</p>
@@ -227,7 +215,7 @@ export default function Home() {
               </p>
               <p className="text-sm text-gray-600 leading-relaxed mt-3">
                 To submit an article, authors are requested to{" "}
-                <a href={JOURNAL.submissionUrl} target="_blank" rel="noopener noreferrer" className="text-[#009e8e] hover:underline font-medium">
+                <a href={JOURNAL.registerUrl} target="_blank" rel="noopener noreferrer" className="text-[#009e8e] hover:underline font-medium">
                   register
                 </a>{" "}
                 and follow the{" "}
@@ -240,7 +228,6 @@ export default function Home() {
               </p>
             </div>
 
-            {/* Current Issue */}
             <div>
               <div className="accent-bar" />
               <p className="text-xs font-bold uppercase tracking-wider text-[#009e8e] mb-1">Quick Link</p>
@@ -248,12 +235,10 @@ export default function Home() {
               <p className="text-sm text-gray-600 mt-3 mb-2">
                 Latest issue available for consultation and download:
               </p>
-              <p className="text-sm font-bold text-[#1b3a5c]">
-                {issueLabel}
-              </p>
+              <p className="text-sm font-bold text-[#1b3a5c]">{issueLabel}</p>
               <div className="mt-3 space-y-2">
-                {issueLoading && !isLiveData ? (
-                  <p className="text-sm text-gray-400 italic">Loading current issue from OJS…</p>
+                {issueLoading ? (
+                  <p className="text-sm text-gray-400 italic">Loading…</p>
                 ) : currentArticles.length === 0 ? (
                   <p className="text-sm text-gray-400 italic">No articles published yet.</p>
                 ) : (
@@ -270,11 +255,6 @@ export default function Home() {
                     </Link>
                   ))
                 )}
-                {issueError && !isLiveData && (
-                  <p className="text-xs text-amber-600 mt-2">
-                    OJS not reachable — showing cached content.
-                  </p>
-                )}
               </div>
               <Link
                 href="/review"
@@ -287,7 +267,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Review Metrics - Elsevier style */}
       <section className="bg-[#1b3a5c]">
         <div className="container py-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
@@ -308,17 +287,13 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Articles Section with Tabs */}
       <section className="bg-white py-12 lg:py-16">
         <div className="container">
           <div className="flex flex-col lg:flex-row gap-10">
-            {/* Main content */}
             <div className="flex-1">
-              {/* Tabs - Elsevier style */}
               <div className="flex items-center gap-0 border-b border-gray-200 mb-6">
                 {[
                   { key: "current", label: "Current Issue" },
-                  { key: "editors", label: "Editor's Choice" },
                   { key: "recent", label: "Recent Articles" },
                 ].map((tab) => (
                   <button
@@ -341,37 +316,44 @@ export default function Home() {
                 </Link>
               </div>
 
-              {/* Tab content */}
               <div className="space-y-0">
                 {activeTab === "current" && (
                   <>
-                    {issueLoading && !isLiveData && (
+                    {issueLoading && (
                       <p className="text-sm text-gray-400 italic py-6">Loading current issue from OJS…</p>
                     )}
-                    {currentArticles.length === 0 && !issueLoading && (
-                      <p className="text-sm text-gray-400 italic py-6">
-                        No articles in the current issue yet. Publish an issue in OJS to see it here.
-                      </p>
+                    {!issueLoading && currentArticles.length === 0 && (
+                      <div className="border border-dashed border-gray-200 rounded p-6 text-center">
+                        <p className="text-sm text-gray-500">No issue has been published yet.</p>
+                        <p className="text-xs text-gray-400 mt-1">
+                          Publish an issue from the OJS backend to make it appear here.
+                        </p>
+                      </div>
                     )}
                     {currentArticles.map((article) => (
                       <ArticleCard key={article.id} article={article} variant="featured" />
                     ))}
                   </>
                 )}
-                {activeTab === "editors" &&
-                  EDITORS_CHOICE.map((article) => (
-                    <ArticleCard key={article.id} article={article} />
-                  ))}
-                {activeTab === "recent" &&
-                  currentArticles.map((article) => (
-                    <ArticleCard key={article.id} article={article} />
-                  ))}
+                {activeTab === "recent" && (
+                  <>
+                    {recentLoading && (
+                      <p className="text-sm text-gray-400 italic py-6">Loading recent articles…</p>
+                    )}
+                    {!recentLoading && recentArticles.length === 0 && (
+                      <div className="border border-dashed border-gray-200 rounded p-6 text-center">
+                        <p className="text-sm text-gray-500">No published articles yet.</p>
+                      </div>
+                    )}
+                    {recentArticles.map((article) => (
+                      <ArticleCard key={article.id} article={article} />
+                    ))}
+                  </>
+                )}
               </div>
             </div>
 
-            {/* Sidebar */}
             <aside className="lg:w-72 shrink-0 space-y-5">
-              {/* Register */}
               <div className="border border-gray-200 rounded p-5">
                 <h3 className="font-serif text-base font-bold text-[#1b3a5c] mb-2">
                   Register Your Account
@@ -396,7 +378,6 @@ export default function Home() {
                 </Link>
               </div>
 
-              {/* Authors Login */}
               <div className="border border-gray-200 rounded p-5">
                 <h3 className="font-serif text-base font-bold text-[#1b3a5c] mb-2">
                   Authors' Login
@@ -404,30 +385,14 @@ export default function Home() {
                 <p className="text-xs text-gray-500 leading-relaxed mb-3">
                   Use the assigned user ID and password to login.
                 </p>
-                <div className="space-y-2">
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded bg-white focus:outline-none focus:border-[#009e8e]"
-                    readOnly
-                    onFocus={() => window.open(JOURNAL.loginUrl, "_blank")}
-                  />
-                  <input
-                    type="password"
-                    placeholder="Password"
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded bg-white focus:outline-none focus:border-[#009e8e]"
-                    readOnly
-                    onFocus={() => window.open(JOURNAL.loginUrl, "_blank")}
-                  />
-                  <a
-                    href={JOURNAL.loginUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center w-full gap-2 px-4 py-2 bg-[#1b3a5c] text-white text-sm font-bold rounded hover:bg-[#152e4a] transition-colors"
-                  >
-                    LOGIN <ExternalLink size={14} />
-                  </a>
-                </div>
+                <a
+                  href={JOURNAL.loginUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center w-full gap-2 px-4 py-2 bg-[#1b3a5c] text-white text-sm font-bold rounded hover:bg-[#152e4a] transition-colors"
+                >
+                  LOGIN <ExternalLink size={14} />
+                </a>
                 <a
                   href={JOURNAL.loginUrl}
                   target="_blank"
@@ -438,7 +403,6 @@ export default function Home() {
                 </a>
               </div>
 
-              {/* Quick Search by Author */}
               <div className="border border-gray-200 rounded p-5">
                 <h3 className="font-serif text-sm font-bold text-[#1b3a5c] mb-3">
                   Quick Search by Author
@@ -460,7 +424,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Scientific Board */}
       <section className="bg-gray-50 border-t border-gray-200 py-12 lg:py-16">
         <div className="container">
           <div className="text-center mb-8">

@@ -1,9 +1,9 @@
 // ============================================================
 // Review Page - IEI 1946
-// Current Issue, Archive, Editor's Choice, Referees
+// Current issue, full archive, recent articles — all from OJS.
 // ============================================================
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "wouter";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -11,8 +11,6 @@ import ArticleCard from "@/components/ArticleCard";
 import {
   JOURNAL,
   EDITORIAL_BOARD,
-  CURRENT_ISSUE as FALLBACK_ISSUE,
-  EDITORS_CHOICE,
   REVIEW_METRICS,
   AIMS_AND_SCOPE,
   CALL_FOR_PAPERS,
@@ -21,20 +19,18 @@ import {
   INDEXING,
   type Article,
 } from "@/lib/data";
-import { useCurrentIssueArticles, useIssues } from "@/hooks/useOJS";
+import { useCurrentIssueArticles, useIssues, useRecentArticles } from "@/hooks/useOJS";
 import {
-  BookOpen,
   Calendar,
   Download,
   ExternalLink,
   Search,
   ArrowRight,
   Send,
-  FileText,
 } from "lucide-react";
 
 export default function Review() {
-  const [activeTab, setActiveTab] = useState<"current" | "editors" | "recent">("current");
+  const [activeTab, setActiveTab] = useState<"current" | "recent">("current");
   const [archiveYear, setArchiveYear] = useState<string>("");
   const [searchYear, setSearchYear] = useState("");
   const [searchAuthor, setSearchAuthor] = useState("");
@@ -42,21 +38,20 @@ export default function Review() {
 
   const { data: liveIssue, loading: issueLoading } = useCurrentIssueArticles();
   const { data: issuesList, loading: issuesLoading } = useIssues(100, 0);
+  const { data: recentArticlesRaw, loading: recentLoading } = useRecentArticles(10);
 
-  const currentArticles: Article[] = liveIssue?.articles?.length
-    ? (liveIssue.articles as unknown as Article[])
-    : (FALLBACK_ISSUE.articles as Article[]);
+  const currentArticles: Article[] = (liveIssue?.articles || []) as unknown as Article[];
+  const recentArticles: Article[] = (recentArticlesRaw || []) as unknown as Article[];
 
   const currentIssueLabel = liveIssue?.issue
     ? `${liveIssue.issue.datePublished ? new Date(liveIssue.issue.datePublished).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) : ""} — Vol. ${liveIssue.issue.volume ?? ""}${liveIssue.issue.number ? ` Issue ${liveIssue.issue.number}` : ""}`
-    : `${FALLBACK_ISSUE.publicationDate} — ${FALLBACK_ISSUE.volume} Issue ${FALLBACK_ISSUE.issue}`;
+    : "—";
 
-  const archiveYears: number[] = (() => {
+  const archiveYears = useMemo<number[]>(() => {
     const years = new Set<number>();
     issuesList?.items?.forEach((it) => { if (it.year) years.add(it.year); });
-    if (years.size === 0) return Array.from({ length: 11 }, (_, i) => 2026 - i);
     return Array.from(years).sort((a, b) => b - a);
-  })();
+  }, [issuesList]);
 
   const archiveIssues = (issuesList?.items || []).filter(
     (it) => !archiveYear || String(it.year) === archiveYear,
@@ -74,7 +69,6 @@ export default function Review() {
     <div className="min-h-screen flex flex-col bg-white">
       <Header />
 
-      {/* Sub-navigation */}
       <div className="bg-white border-b border-gray-200">
         <div className="container flex items-center gap-4 py-2 text-sm overflow-x-auto">
           <Link href="/" className="text-gray-500 hover:text-[#009e8e] whitespace-nowrap">Home</Link>
@@ -91,7 +85,6 @@ export default function Review() {
         </div>
       </div>
 
-      {/* Hero */}
       <section className="bg-[#1b3a5c] py-12 lg:py-16">
         <div className="container">
           <h1 className="font-serif text-3xl lg:text-4xl font-bold text-white">The Review</h1>
@@ -102,7 +95,6 @@ export default function Review() {
         </div>
       </section>
 
-      {/* Search Bar */}
       <section className="bg-white border-b border-gray-200">
         <div className="container py-4">
           <div className="flex flex-col sm:flex-row items-stretch gap-2">
@@ -121,9 +113,7 @@ export default function Review() {
       <main className="flex-1">
         <div className="container py-10 lg:py-16">
           <div className="flex flex-col lg:flex-row gap-10">
-            {/* Main content */}
             <div className="flex-1">
-              {/* Aims & Scope */}
               <section className="mb-10">
                 <h2 className="font-serif text-2xl font-bold text-[#1b3a5c] mb-4">Aims & Scope</h2>
                 <p className="text-sm text-gray-600 leading-relaxed text-justify">
@@ -134,18 +124,16 @@ export default function Review() {
                 </Link>
               </section>
 
-              {/* Call for Papers */}
               <section className="mb-10">
                 <h2 className="font-serif text-2xl font-bold text-[#1b3a5c] mb-4">Call for Papers</h2>
                 <p className="text-sm text-gray-600 leading-relaxed text-justify">
                   {CALL_FOR_PAPERS.split("\n\n")[0]}
                 </p>
                 <p className="text-xs text-gray-500 mt-3">
-                  Indexed in: {INDEXING.join(" \u00b7 ")}
+                  Indexed in: {INDEXING.join(" · ")}
                 </p>
               </section>
 
-              {/* Review Metrics */}
               <section className="mb-10 bg-white border border-gray-200 p-6">
                 <h3 className="font-serif text-lg font-bold text-[#1b3a5c] mb-4">Review Metrics</h3>
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -159,7 +147,6 @@ export default function Review() {
                 </div>
               </section>
 
-              {/* Latest Issue */}
               <section id="latest-issue" className="mb-10 scroll-mt-24">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="font-serif text-2xl font-bold text-[#1b3a5c]">
@@ -171,11 +158,16 @@ export default function Review() {
                   </span>
                 </div>
                 <div className="space-y-4">
-                  {issueLoading && currentArticles.length === 0 && (
+                  {issueLoading && (
                     <p className="text-sm text-gray-400 italic">Loading latest issue from OJS…</p>
                   )}
                   {!issueLoading && currentArticles.length === 0 && (
-                    <p className="text-sm text-gray-400 italic">No articles published yet.</p>
+                    <div className="border border-dashed border-gray-200 rounded p-6 text-center">
+                      <p className="text-sm text-gray-500">No issue has been published yet.</p>
+                      <p className="text-xs text-gray-400 mt-1">
+                        Publish an issue from OJS to display it here.
+                      </p>
+                    </div>
                   )}
                   {currentArticles.map((article) => (
                     <ArticleCard key={article.id} article={article} variant="featured" />
@@ -183,7 +175,6 @@ export default function Review() {
                 </div>
               </section>
 
-              {/* Archive */}
               <section id="archive" className="mb-10 scroll-mt-24">
                 <h2 className="font-serif text-2xl font-bold text-[#1b3a5c] mb-4">Archive</h2>
                 <div className="bg-white border border-gray-200 p-6">
@@ -191,46 +182,58 @@ export default function Review() {
                     <div>
                       <h3 className="text-sm font-semibold text-[#1b3a5c]">Browse the archive</h3>
                       <p className="text-xs text-gray-500 mt-1">
-                        {issuesLoading ? "Loading issues from OJS…" : `${issuesList?.itemsMax ?? archiveIssues.length} published issues`}
+                        {issuesLoading
+                          ? "Loading issues from OJS…"
+                          : `${issuesList?.itemsMax ?? archiveIssues.length} published issues`}
                       </p>
                     </div>
-                    <select
-                      value={archiveYear}
-                      onChange={(e) => setArchiveYear(e.target.value)}
-                      className="px-3 py-2 text-sm border border-gray-200 rounded-md bg-input focus:outline-none focus:ring-2 focus:ring-[#009e8e]/30"
-                    >
-                      <option value="">All years</option>
-                      {archiveYears.map((year) => (
-                        <option key={year} value={year}>{year}</option>
-                      ))}
-                    </select>
+                    {archiveYears.length > 0 && (
+                      <select
+                        value={archiveYear}
+                        onChange={(e) => setArchiveYear(e.target.value)}
+                        className="px-3 py-2 text-sm border border-gray-200 rounded-md bg-input focus:outline-none focus:ring-2 focus:ring-[#009e8e]/30"
+                      >
+                        <option value="">All years</option>
+                        {archiveYears.map((year) => (
+                          <option key={year} value={year}>{year}</option>
+                        ))}
+                      </select>
+                    )}
                   </div>
 
-                  <div className="flex flex-wrap gap-2">
-                    <button
-                      onClick={() => setArchiveYear("")}
-                      className={`px-3 py-1.5 text-sm rounded-md transition-colors ${
-                        archiveYear === ""
-                          ? "bg-[#009e8e] text-white"
-                          : "bg-gray-100 text-gray-600 hover:bg-[#009e8e]/10"
-                      }`}
-                    >
-                      All
-                    </button>
-                    {archiveYears.map((year) => (
+                  {archiveYears.length > 0 && (
+                    <div className="flex flex-wrap gap-2">
                       <button
-                        key={year}
-                        onClick={() => setArchiveYear(String(year))}
+                        onClick={() => setArchiveYear("")}
                         className={`px-3 py-1.5 text-sm rounded-md transition-colors ${
-                          archiveYear === String(year)
+                          archiveYear === ""
                             ? "bg-[#009e8e] text-white"
                             : "bg-gray-100 text-gray-600 hover:bg-[#009e8e]/10"
                         }`}
                       >
-                        {year}
+                        All
                       </button>
-                    ))}
-                  </div>
+                      {archiveYears.map((year) => (
+                        <button
+                          key={year}
+                          onClick={() => setArchiveYear(String(year))}
+                          className={`px-3 py-1.5 text-sm rounded-md transition-colors ${
+                            archiveYear === String(year)
+                              ? "bg-[#009e8e] text-white"
+                              : "bg-gray-100 text-gray-600 hover:bg-[#009e8e]/10"
+                          }`}
+                        >
+                          {year}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+
+                  {!issuesLoading && archiveIssues.length === 0 && (
+                    <p className="text-sm text-gray-400 italic mt-4">
+                      No issues in the archive yet.
+                    </p>
+                  )}
 
                   {archiveIssues.length > 0 && (
                     <div className="mt-6 border-t border-gray-200 pt-4 space-y-2">
@@ -252,7 +255,7 @@ export default function Review() {
                   )}
 
                   <div className="mt-6 border-t border-gray-200 pt-4">
-                    <h3 className="text-sm font-semibold text-[#1b3a5c] mb-2">Browse articles from 1984 to 2015</h3>
+                    <h3 className="text-sm font-semibold text-[#1b3a5c] mb-2">Historical archive (1984–2015)</h3>
                     <a
                       href="https://ideas.repec.org/s/ris/ecoint.html"
                       target="_blank"
@@ -273,7 +276,6 @@ export default function Review() {
                 </div>
               </section>
 
-              {/* Editor's Note */}
               <section className="mb-10">
                 <h2 className="font-serif text-2xl font-bold text-[#1b3a5c] mb-4">Editor's Note</h2>
                 {EDITORS_NOTE.split("\n\n").map((p, i) => (
@@ -282,7 +284,6 @@ export default function Review() {
                 <p className="text-sm font-semibold text-[#1b3a5c]">{EDITORIAL_BOARD.editorInChief}, Editor in Chief</p>
               </section>
 
-              {/* Founders */}
               <section className="mb-10">
                 <h2 className="font-serif text-2xl font-bold text-[#1b3a5c] mb-4">Founders</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -298,7 +299,6 @@ export default function Review() {
                 </div>
               </section>
 
-              {/* Referees */}
               <section className="mb-10">
                 <h2 className="font-serif text-2xl font-bold text-[#1b3a5c] mb-4">Referees</h2>
                 <p className="text-sm text-gray-600 leading-relaxed mb-3">
@@ -306,16 +306,14 @@ export default function Review() {
                   contributed to the review process during the past year.
                 </p>
                 <button className="inline-flex items-center gap-2 px-4 py-2 bg-[#009e8e] text-white text-sm font-semibold rounded hover:bg-[#008a7c] transition-colors">
-                  <Download size={14} /> Download 2025 Referees List (PDF)
+                  <Download size={14} /> Download Referees List (PDF)
                 </button>
               </section>
 
-              {/* Articles Tabs */}
               <section className="mb-10">
                 <div className="flex items-center gap-1 border-b border-gray-200 mb-6">
                   {[
                     { key: "current", label: "Current Issue" },
-                    { key: "editors", label: "Editor's Choice" },
                     { key: "recent", label: "Recent Articles" },
                   ].map((tab) => (
                     <button
@@ -332,22 +330,37 @@ export default function Review() {
                   ))}
                 </div>
                 <div className="space-y-4">
-                  {activeTab === "current" && currentArticles.map((a) => (
-                    <ArticleCard key={a.id} article={a} />
-                  ))}
-                  {activeTab === "editors" && EDITORS_CHOICE.map((a) => (
-                    <ArticleCard key={a.id} article={a} />
-                  ))}
-                  {activeTab === "recent" && currentArticles.map((a) => (
-                    <ArticleCard key={a.id} article={a} />
-                  ))}
+                  {activeTab === "current" && (
+                    <>
+                      {issueLoading && (
+                        <p className="text-sm text-gray-400 italic">Loading…</p>
+                      )}
+                      {!issueLoading && currentArticles.length === 0 && (
+                        <p className="text-sm text-gray-400 italic">No articles in the current issue.</p>
+                      )}
+                      {currentArticles.map((a) => (
+                        <ArticleCard key={a.id} article={a} />
+                      ))}
+                    </>
+                  )}
+                  {activeTab === "recent" && (
+                    <>
+                      {recentLoading && (
+                        <p className="text-sm text-gray-400 italic">Loading…</p>
+                      )}
+                      {!recentLoading && recentArticles.length === 0 && (
+                        <p className="text-sm text-gray-400 italic">No published articles yet.</p>
+                      )}
+                      {recentArticles.map((a) => (
+                        <ArticleCard key={a.id} article={a} />
+                      ))}
+                    </>
+                  )}
                 </div>
               </section>
             </div>
 
-            {/* Sidebar */}
             <aside className="lg:w-80 shrink-0 space-y-6">
-              {/* Submit */}
               <div className="bg-[#009e8e] rounded p-5 text-white">
                 <div className="flex items-center gap-2 mb-2">
                   <Send size={18} />
@@ -359,7 +372,6 @@ export default function Review() {
                 </a>
               </div>
 
-              {/* Register */}
               <div className="bg-white border border-gray-200 p-5">
                 <h3 className="font-serif text-lg font-bold text-[#1b3a5c] mb-2">Register Your Account</h3>
                 <p className="text-sm text-gray-500 leading-relaxed mb-4">
@@ -370,7 +382,6 @@ export default function Review() {
                 </a>
               </div>
 
-              {/* Login */}
               <div className="bg-white border border-gray-200 p-5">
                 <h3 className="font-serif text-lg font-bold text-[#1b3a5c] mb-2">Authors' Login</h3>
                 <p className="text-sm text-gray-500 leading-relaxed mb-4">
@@ -381,7 +392,6 @@ export default function Review() {
                 </a>
               </div>
 
-              {/* A-Z Author Search */}
               <div className="bg-white border border-gray-200 p-5">
                 <h3 className="font-serif text-base font-bold text-[#1b3a5c] mb-3">Quick Search by Author</h3>
                 <div className="flex flex-wrap gap-1">

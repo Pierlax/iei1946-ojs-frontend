@@ -79,6 +79,17 @@ export interface OJSListResponse<T> {
   itemsMax: number;
 }
 
+export interface OJSAnnouncement {
+  id: number;
+  title: Record<string, string>;
+  description?: Record<string, string>;
+  descriptionShort?: Record<string, string>;
+  datePosted?: string;
+  dateExpire?: string;
+  typeId?: number;
+  url?: string;
+}
+
 function buildUrl(endpoint: string, params?: Record<string, string | number | undefined>): string {
   const base = DIRECT
     ? `${OJS_BASE_URL}/index.php/${JOURNAL_PATH}/api/v1`
@@ -137,6 +148,10 @@ export async function getSubmission(submissionId: number): Promise<OJSSubmission
 
 export async function searchArticles(query: string, count = 20): Promise<OJSListResponse<OJSSubmission>> {
   return getSubmissions({ searchPhrase: query, count });
+}
+
+export async function getAnnouncements(count = 20, offset = 0): Promise<OJSListResponse<OJSAnnouncement>> {
+  return ojsFetch<OJSListResponse<OJSAnnouncement>>("announcements", { count, offset });
 }
 
 export function getLocalized(field: Record<string, string> | string | undefined, locale = "en"): string {

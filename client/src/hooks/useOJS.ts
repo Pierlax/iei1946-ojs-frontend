@@ -3,12 +3,14 @@
 
 import { useEffect, useState } from "react";
 import {
+  getAnnouncements,
   getCurrentIssue,
   getIssue,
   getIssues,
   getSubmission,
   getSubmissions,
   normalizeSubmission,
+  type OJSAnnouncement,
   type OJSIssue,
   type OJSSubmission,
   type OJSListResponse,
@@ -65,6 +67,57 @@ export function useSubmissions(params: { count?: number; offset?: number; search
     () => getSubmissions(params),
     [key],
   );
+}
+
+export function useAnnouncements(count = 20) {
+  return useAsync<OJSListResponse<OJSAnnouncement>>(
+    () => getAnnouncements(count, 0),
+    [count],
+  );
+}
+
+// Convenience: published submissions normalized to NormalizedArticle, with issue
+// metadata hydrated when available.
+export function useRecentArticles(count = 5): AsyncState<NormalizedArticle[]> {
+  const [state, setState] = useState<AsyncState<NormalizedArticle[]>>({
+    data: null, loading: true, error: null,
+  });
+
+  useEffect(() => {
+    let cancelled = false;
+    setState({ data: null, loading: true, error: null });
+
+    (async () => {
+      try {
+        const list = await getSubmissions({ count, status: 3, orderBy: "datePublished", orderDirection: "DESC" });
+        const issueIds = new Set<number>();
+        list.items.forEach((s) => {
+          const pub = s.publications?.find((p) => p.id === s.currentPublicationId)
+            || s.publications?.[s.publications.length - 1];
+          if (pub?.issueId) issueIds.add(pub.issueId);
+        });
+        const issueMap = new Map<number, OJSIssue>();
+        await Promise.all(
+          Array.from(issueIds).map(async (id) => {
+            try { issueMap.set(id, await getIssue(id)); } catch { /* ignore */ }
+          }),
+        );
+        const articles = list.items.map((s) => {
+          const pub = s.publications?.find((p) => p.id === s.currentPublicationId)
+            || s.publications?.[s.publications.length - 1];
+          const issue = pub?.issueId ? issueMap.get(pub.issueId) : undefined;
+          return normalizeSubmission(s, issue);
+        });
+        if (!cancelled) setState({ data: articles, loading: false, error: null });
+      } catch (error) {
+        if (!cancelled) setState({ data: null, loading: false, error: error as Error });
+      }
+    })();
+
+    return () => { cancelled = true; };
+  }, [count]);
+
+  return state;
 }
 
 // Convenience: current issue already hydrated as normalized articles.
