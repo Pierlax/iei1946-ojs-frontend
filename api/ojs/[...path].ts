@@ -9,7 +9,7 @@ const OJS_JOURNAL_PATH = process.env.OJS_JOURNAL_PATH || "iei";
 const OJS_API_TOKEN = (process.env.OJS_API_TOKEN || "").trim().replace(/^["']|["']$/g, "");
 
 const CACHE_SECONDS = 300;
-const DEBUG = process.env.OJS_PROXY_DEBUG === "1" || true;
+const DEBUG = process.env.OJS_PROXY_DEBUG === "1";
 
 const PATH_PREFIX = "/api/ojs/";
 
