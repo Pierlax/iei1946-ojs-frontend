@@ -3,6 +3,10 @@
 // All content from the current iei1946.it site
 // ============================================================
 
+const OJS_BASE = (import.meta.env.VITE_OJS_BASE_URL || "http://204.216.215.234/ojs").replace(/\/$/, "");
+const OJS_JOURNAL = import.meta.env.VITE_OJS_JOURNAL_PATH || "iei";
+const ojsUrl = (suffix: string) => `${OJS_BASE}/index.php/${OJS_JOURNAL}/${suffix}`;
+
 export const JOURNAL = {
   name: "Economia Internazionale",
   nameEn: "International Economics",
@@ -21,10 +25,11 @@ export const JOURNAL = {
   website: "www.ge.camcom.gov.it",
   license: "Creative Commons Attribution-NonCommercial 4.0 International",
   licenseUrl: "https://creativecommons.org/licenses/by-nc/4.0/",
-  ojsBaseUrl: "https://ojs.iei1946.it",
-  submissionUrl: "https://ojs.iei1946.it/index.php/iei/submission",
-  loginUrl: "https://ojs.iei1946.it/index.php/iei/login",
-  registerUrl: "https://ojs.iei1946.it/index.php/iei/user/register",
+  ojsBaseUrl: OJS_BASE,
+  ojsJournalPath: OJS_JOURNAL,
+  submissionUrl: ojsUrl("submissions"),
+  loginUrl: ojsUrl("login"),
+  registerUrl: ojsUrl("user/register"),
   logoUrl: "https://d2xsxph8kpxj0f.cloudfront.net/109698682/Ybj72GNFScvp3J8KE6MPud/iei-logo_add5cc4c.webp",
   heroUrl: "https://d2xsxph8kpxj0f.cloudfront.net/109698682/Ybj72GNFScvp3J8KE6MPud/iei-hero-background_2104ff9e.png",
   // Original site images

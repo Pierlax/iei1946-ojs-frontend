@@ -13,11 +13,13 @@ import {
   JOURNAL,
   EDITORIAL_BOARD,
   REVIEW_METRICS,
-  CURRENT_ISSUE,
+  CURRENT_ISSUE as FALLBACK_ISSUE,
   EDITORS_CHOICE,
   AIMS_AND_SCOPE,
   CALL_FOR_PAPERS,
+  type Article,
 } from "@/lib/data";
+import { useCurrentIssueArticles } from "@/hooks/useOJS";
 import {
   BookOpen,
   Send,
@@ -41,6 +43,15 @@ export default function Home() {
   const [searchYear, setSearchYear] = useState("");
   const [searchAuthor, setSearchAuthor] = useState("");
   const [searchKeyword, setSearchKeyword] = useState("");
+
+  const { data: liveIssue, loading: issueLoading, error: issueError } = useCurrentIssueArticles();
+  const issueLabel = liveIssue
+    ? `Vol. ${liveIssue.issue.volume ?? "?"}${liveIssue.issue.number ? `, No. ${liveIssue.issue.number}` : ""}${liveIssue.issue.year ? `, ${liveIssue.issue.year}` : ""}`
+    : `${FALLBACK_ISSUE.year}`;
+  const currentArticles: Article[] = liveIssue?.articles?.length
+    ? (liveIssue.articles as unknown as Article[])
+    : (FALLBACK_ISSUE.articles as Article[]);
+  const isLiveData = !!liveIssue?.articles?.length;
 
   const handleSearch = () => {
     const params = new URLSearchParams();
@@ -238,21 +249,32 @@ export default function Home() {
                 Latest issue available for consultation and download:
               </p>
               <p className="text-sm font-bold text-[#1b3a5c]">
-                {CURRENT_ISSUE.year}
+                {issueLabel}
               </p>
               <div className="mt-3 space-y-2">
-                {CURRENT_ISSUE.articles.map((article) => (
-                  <Link
-                    key={article.id}
-                    href={`/article/${article.id}`}
-                    className="block text-sm text-gray-600 hover:text-[#009e8e] transition-colors leading-snug"
-                  >
-                    {article.title}{" "}
-                    <span className="text-gray-400">
-                      ({article.authors.map((a) => a.name.split(" ").pop()).join(", ")})
-                    </span>
-                  </Link>
-                ))}
+                {issueLoading && !isLiveData ? (
+                  <p className="text-sm text-gray-400 italic">Loading current issue from OJS…</p>
+                ) : currentArticles.length === 0 ? (
+                  <p className="text-sm text-gray-400 italic">No articles published yet.</p>
+                ) : (
+                  currentArticles.slice(0, 5).map((article) => (
+                    <Link
+                      key={article.id}
+                      href={`/article/${article.id}`}
+                      className="block text-sm text-gray-600 hover:text-[#009e8e] transition-colors leading-snug"
+                    >
+                      {article.title}{" "}
+                      <span className="text-gray-400">
+                        ({article.authors.map((a) => a.name.split(" ").pop()).join(", ")})
+                      </span>
+                    </Link>
+                  ))
+                )}
+                {issueError && !isLiveData && (
+                  <p className="text-xs text-amber-600 mt-2">
+                    OJS not reachable — showing cached content.
+                  </p>
+                )}
               </div>
               <Link
                 href="/review"
@@ -321,16 +343,27 @@ export default function Home() {
 
               {/* Tab content */}
               <div className="space-y-0">
-                {activeTab === "current" &&
-                  CURRENT_ISSUE.articles.map((article) => (
-                    <ArticleCard key={article.id} article={article} variant="featured" />
-                  ))}
+                {activeTab === "current" && (
+                  <>
+                    {issueLoading && !isLiveData && (
+                      <p className="text-sm text-gray-400 italic py-6">Loading current issue from OJS…</p>
+                    )}
+                    {currentArticles.length === 0 && !issueLoading && (
+                      <p className="text-sm text-gray-400 italic py-6">
+                        No articles in the current issue yet. Publish an issue in OJS to see it here.
+                      </p>
+                    )}
+                    {currentArticles.map((article) => (
+                      <ArticleCard key={article.id} article={article} variant="featured" />
+                    ))}
+                  </>
+                )}
                 {activeTab === "editors" &&
                   EDITORS_CHOICE.map((article) => (
                     <ArticleCard key={article.id} article={article} />
                   ))}
                 {activeTab === "recent" &&
-                  CURRENT_ISSUE.articles.map((article) => (
+                  currentArticles.map((article) => (
                     <ArticleCard key={article.id} article={article} />
                   ))}
               </div>

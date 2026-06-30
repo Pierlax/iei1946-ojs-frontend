@@ -11,7 +11,7 @@ import ArticleCard from "@/components/ArticleCard";
 import {
   JOURNAL,
   EDITORIAL_BOARD,
-  CURRENT_ISSUE,
+  CURRENT_ISSUE as FALLBACK_ISSUE,
   EDITORS_CHOICE,
   REVIEW_METRICS,
   AIMS_AND_SCOPE,
@@ -19,7 +19,9 @@ import {
   EDITORS_NOTE,
   FOUNDERS,
   INDEXING,
+  type Article,
 } from "@/lib/data";
+import { useCurrentIssueArticles, useIssues } from "@/hooks/useOJS";
 import {
   BookOpen,
   Calendar,
@@ -31,14 +33,34 @@ import {
   FileText,
 } from "lucide-react";
 
-const ARCHIVE_YEARS = Array.from({ length: 11 }, (_, i) => 2026 - i); // 2026 to 2016
-
 export default function Review() {
   const [activeTab, setActiveTab] = useState<"current" | "editors" | "recent">("current");
-  const [archiveYear, setArchiveYear] = useState("2026");
+  const [archiveYear, setArchiveYear] = useState<string>("");
   const [searchYear, setSearchYear] = useState("");
   const [searchAuthor, setSearchAuthor] = useState("");
   const [searchKeyword, setSearchKeyword] = useState("");
+
+  const { data: liveIssue, loading: issueLoading } = useCurrentIssueArticles();
+  const { data: issuesList, loading: issuesLoading } = useIssues(100, 0);
+
+  const currentArticles: Article[] = liveIssue?.articles?.length
+    ? (liveIssue.articles as unknown as Article[])
+    : (FALLBACK_ISSUE.articles as Article[]);
+
+  const currentIssueLabel = liveIssue?.issue
+    ? `${liveIssue.issue.datePublished ? new Date(liveIssue.issue.datePublished).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) : ""} — Vol. ${liveIssue.issue.volume ?? ""}${liveIssue.issue.number ? ` Issue ${liveIssue.issue.number}` : ""}`
+    : `${FALLBACK_ISSUE.publicationDate} — ${FALLBACK_ISSUE.volume} Issue ${FALLBACK_ISSUE.issue}`;
+
+  const archiveYears: number[] = (() => {
+    const years = new Set<number>();
+    issuesList?.items?.forEach((it) => { if (it.year) years.add(it.year); });
+    if (years.size === 0) return Array.from({ length: 11 }, (_, i) => 2026 - i);
+    return Array.from(years).sort((a, b) => b - a);
+  })();
+
+  const archiveIssues = (issuesList?.items || []).filter(
+    (it) => !archiveYear || String(it.year) === archiveYear,
+  );
 
   const handleSearch = () => {
     const params = new URLSearchParams();
@@ -145,11 +167,17 @@ export default function Review() {
                   </h2>
                   <span className="text-sm text-gray-500">
                     <Calendar size={14} className="inline mr-1" />
-                    {CURRENT_ISSUE.publicationDate} &mdash; {CURRENT_ISSUE.volume} Issue {CURRENT_ISSUE.issue}
+                    {currentIssueLabel}
                   </span>
                 </div>
                 <div className="space-y-4">
-                  {CURRENT_ISSUE.articles.map((article) => (
+                  {issueLoading && currentArticles.length === 0 && (
+                    <p className="text-sm text-gray-400 italic">Loading latest issue from OJS…</p>
+                  )}
+                  {!issueLoading && currentArticles.length === 0 && (
+                    <p className="text-sm text-gray-400 italic">No articles published yet.</p>
+                  )}
+                  {currentArticles.map((article) => (
                     <ArticleCard key={article.id} article={article} variant="featured" />
                   ))}
                 </div>
@@ -161,21 +189,35 @@ export default function Review() {
                 <div className="bg-white border border-gray-200 p-6">
                   <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-4">
                     <div>
-                      <h3 className="text-sm font-semibold text-[#1b3a5c]">Browse articles from 2016 to 2026</h3>
-                      <p className="text-xs text-gray-500 mt-1">Select a year to browse the archive</p>
+                      <h3 className="text-sm font-semibold text-[#1b3a5c]">Browse the archive</h3>
+                      <p className="text-xs text-gray-500 mt-1">
+                        {issuesLoading ? "Loading issues from OJS…" : `${issuesList?.itemsMax ?? archiveIssues.length} published issues`}
+                      </p>
                     </div>
                     <select
                       value={archiveYear}
                       onChange={(e) => setArchiveYear(e.target.value)}
                       className="px-3 py-2 text-sm border border-gray-200 rounded-md bg-input focus:outline-none focus:ring-2 focus:ring-[#009e8e]/30"
                     >
-                      {ARCHIVE_YEARS.map((year) => (
+                      <option value="">All years</option>
+                      {archiveYears.map((year) => (
                         <option key={year} value={year}>{year}</option>
                       ))}
                     </select>
                   </div>
+
                   <div className="flex flex-wrap gap-2">
-                    {ARCHIVE_YEARS.map((year) => (
+                    <button
+                      onClick={() => setArchiveYear("")}
+                      className={`px-3 py-1.5 text-sm rounded-md transition-colors ${
+                        archiveYear === ""
+                          ? "bg-[#009e8e] text-white"
+                          : "bg-gray-100 text-gray-600 hover:bg-[#009e8e]/10"
+                      }`}
+                    >
+                      All
+                    </button>
+                    {archiveYears.map((year) => (
                       <button
                         key={year}
                         onClick={() => setArchiveYear(String(year))}
@@ -189,6 +231,25 @@ export default function Review() {
                       </button>
                     ))}
                   </div>
+
+                  {archiveIssues.length > 0 && (
+                    <div className="mt-6 border-t border-gray-200 pt-4 space-y-2">
+                      {archiveIssues.map((it) => (
+                        <a
+                          key={it.id}
+                          href={`${JOURNAL.ojsBaseUrl}/index.php/${JOURNAL.ojsJournalPath}/issue/view/${it.id}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block text-sm text-[#1b3a5c] hover:text-[#009e8e] transition-colors"
+                        >
+                          Vol. {it.volume ?? "?"}{it.number ? `, No. ${it.number}` : ""}
+                          {it.year ? ` · ${it.year}` : ""}
+                          {it.identification ? ` — ${it.identification}` : ""}
+                          <ExternalLink size={11} className="inline ml-1 text-gray-400" />
+                        </a>
+                      ))}
+                    </div>
+                  )}
 
                   <div className="mt-6 border-t border-gray-200 pt-4">
                     <h3 className="text-sm font-semibold text-[#1b3a5c] mb-2">Browse articles from 1984 to 2015</h3>
@@ -271,13 +332,13 @@ export default function Review() {
                   ))}
                 </div>
                 <div className="space-y-4">
-                  {activeTab === "current" && CURRENT_ISSUE.articles.map((a) => (
+                  {activeTab === "current" && currentArticles.map((a) => (
                     <ArticleCard key={a.id} article={a} />
                   ))}
                   {activeTab === "editors" && EDITORS_CHOICE.map((a) => (
                     <ArticleCard key={a.id} article={a} />
                   ))}
-                  {activeTab === "recent" && CURRENT_ISSUE.articles.map((a) => (
+                  {activeTab === "recent" && currentArticles.map((a) => (
                     <ArticleCard key={a.id} article={a} />
                   ))}
                 </div>

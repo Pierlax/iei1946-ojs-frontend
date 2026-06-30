@@ -12,6 +12,7 @@ import {
   JOURNAL,
   type Article,
 } from "@/lib/data";
+import { useArticle } from "@/hooks/useOJS";
 import {
   ArrowLeft,
   FileText,
@@ -22,20 +23,31 @@ import {
   ChevronRight,
 } from "lucide-react";
 
-function findArticle(id: string): Article | undefined {
-  const allArticles = [
-    ...CURRENT_ISSUE.articles,
-    ...EDITORS_CHOICE,
-  ];
-  return allArticles.find((a) => String(a.id) === id);
+function findFallback(id: string): Article | undefined {
+  const all = [...CURRENT_ISSUE.articles, ...EDITORS_CHOICE];
+  return all.find((a) => String(a.id) === id);
 }
 
 export default function ArticleDetail() {
   const [, params] = useRoute("/article/:id");
   const id = params?.id;
-  const article = id ? findArticle(id) : undefined;
+  const { data: liveArticle, loading, error } = useArticle(id);
+  const article: Article | undefined = (liveArticle as unknown as Article | null) || (id ? findFallback(id) : undefined);
+
+  if (loading && !article) {
+    return (
+      <div className="min-h-screen flex flex-col bg-white">
+        <Header />
+        <main className="flex-1 container py-16">
+          <p className="text-center text-gray-500">Loading article from OJS…</p>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   if (!article) {
+    void error;
     return (
       <div className="min-h-screen flex flex-col bg-white">
         <Header />
@@ -281,7 +293,7 @@ export default function ArticleDetail() {
                           window.open(article.pdfUrl, "_blank");
                         } else {
                           window.open(
-                            `${JOURNAL.ojsBaseUrl}/index.php/iei/article/view/${article.id}`,
+                            `${JOURNAL.ojsBaseUrl}/index.php/${JOURNAL.ojsJournalPath}/article/view/${article.id}`,
                             "_blank"
                           );
                         }
