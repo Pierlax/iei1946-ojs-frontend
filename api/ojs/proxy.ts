@@ -1,5 +1,9 @@
 // Vercel serverless proxy to OJS REST API.
 // Hides the API token, bridges HTTPS (frontend) -> HTTP (OJS), avoids CORS.
+// Path segments are captured by a rewrite in vercel.json as ?p=segment/segment
+// so a single-file serverless function reliably handles any nested path
+// (workaround for catch-all [...path].ts not matching deep paths on some
+// Vercel deployments).
 
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 
@@ -12,32 +16,34 @@ const CACHE_SECONDS = 300;
 const DEBUG = process.env.OJS_PROXY_DEBUG === "1";
 
 const PATH_PREFIX = "/api/ojs/";
+const RESERVED_QUERY_KEYS = new Set(["p", "path", "...path"]);
+
+function extractApiPath(req: VercelRequest): string {
+  const p = req.query.p;
+  if (typeof p === "string" && p) return p.replace(/^\/+|\/+$/g, "");
+  if (Array.isArray(p) && p.length) return p.join("/").replace(/^\/+|\/+$/g, "");
+
+  const rawUrl = req.url || "";
+  const qi = rawUrl.indexOf("?");
+  const path = qi >= 0 ? rawUrl.slice(0, qi) : rawUrl;
+  if (path.startsWith(PATH_PREFIX)) return path.slice(PATH_PREFIX.length).replace(/^\/+|\/+$/g, "");
+  return "";
+}
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "GET" && req.method !== "OPTIONS") {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  // Parse the path directly from req.url. Don't rely on req.query.path —
-  // Vercel exposes the catch-all under different keys ([...path] -> "...path")
-  // and including it in the upstream URL would corrupt the request.
-  const reqUrl = req.url || "";
-  const queryIdx = reqUrl.indexOf("?");
-  const rawPath = queryIdx >= 0 ? reqUrl.slice(0, queryIdx) : reqUrl;
-  const search = queryIdx >= 0 ? reqUrl.slice(queryIdx + 1) : "";
-
-  const apiPath = rawPath.startsWith(PATH_PREFIX)
-    ? rawPath.slice(PATH_PREFIX.length).replace(/^\/+|\/+$/g, "")
-    : "";
-
+  const apiPath = extractApiPath(req);
   const url = new URL(`${OJS_BASE_URL}/index.php/${OJS_JOURNAL_PATH}/api/v1/${apiPath}`);
 
-  // Forward query params, but drop the Vercel-internal "path" param keys.
-  const incoming = new URLSearchParams(search);
-  incoming.forEach((value, key) => {
-    if (key === "path" || key === "...path") return;
-    url.searchParams.append(key, value);
-  });
+  for (const [key, value] of Object.entries(req.query)) {
+    if (RESERVED_QUERY_KEYS.has(key)) continue;
+    if (value === undefined || value === null) continue;
+    if (Array.isArray(value)) value.forEach((v) => url.searchParams.append(key, String(v)));
+    else url.searchParams.append(key, String(value));
+  }
 
   const headers: Record<string, string> = { Accept: "application/json" };
   if (OJS_API_TOKEN) headers.Authorization = `Bearer ${OJS_API_TOKEN}`;
@@ -51,7 +57,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       OJS_API_TOKEN ? `${OJS_API_TOKEN.slice(0, 10)}...${OJS_API_TOKEN.slice(-6)}` : "none",
     );
     res.setHeader("X-Debug-Api-Path", apiPath);
-    res.setHeader("X-Debug-Raw-Path", rawPath);
   }
 
   try {
