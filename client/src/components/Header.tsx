@@ -107,7 +107,7 @@ export default function Header() {
               onMouseLeave={() => setAboutOpen(false)}
             >
               <button className={`px-4 py-3 text-sm font-semibold transition-colors border-b-2 flex items-center gap-1 ${
-                ["/about", "/submission-guidelines", "/editorial-board", "/publication-ethics", "/oa-copyright"].includes(location)
+                ["/about", "/submission-guidelines", "/editorial-board", "/publication-ethics", "/oa-copyright", "/peer-review", "/for-authors", "/for-reviewers"].includes(location)
                   ? "text-[#009e8e] border-[#009e8e]"
                   : "text-[#333] border-transparent hover:text-[#009e8e]"
               }`}>
@@ -120,7 +120,7 @@ export default function Header() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 2 }}
                     transition={{ duration: 0.12 }}
-                    className="absolute left-0 top-full w-56 bg-white shadow-lg border border-gray-200 py-1 z-50"
+                    className="absolute left-0 top-full w-64 bg-white shadow-lg border border-gray-200 py-1 z-50"
                   >
                     <Link href="/about" className="block px-4 py-2.5 text-sm text-[#333] hover:bg-gray-50 hover:text-[#009e8e] font-medium">
                       About the Review
@@ -128,9 +128,20 @@ export default function Header() {
                     <Link href="/editorial-board" className="block px-4 py-2.5 text-sm text-[#333] hover:bg-gray-50 hover:text-[#009e8e] font-medium">
                       Editorial Board
                     </Link>
+                    <Link href="/peer-review" className="block px-4 py-2.5 text-sm text-[#333] hover:bg-gray-50 hover:text-[#009e8e] font-medium">
+                      Peer Review Process
+                    </Link>
+                    <div className="border-t border-gray-100 my-1" />
+                    <Link href="/for-authors" className="block px-4 py-2.5 text-sm text-[#333] hover:bg-gray-50 hover:text-[#009e8e] font-medium">
+                      For Authors
+                    </Link>
+                    <Link href="/for-reviewers" className="block px-4 py-2.5 text-sm text-[#333] hover:bg-gray-50 hover:text-[#009e8e] font-medium">
+                      For Reviewers
+                    </Link>
                     <Link href="/submission-guidelines" className="block px-4 py-2.5 text-sm text-[#333] hover:bg-gray-50 hover:text-[#009e8e] font-medium">
                       Submission Guidelines
                     </Link>
+                    <div className="border-t border-gray-100 my-1" />
                     <Link href="/publication-ethics" className="block px-4 py-2.5 text-sm text-[#333] hover:bg-gray-50 hover:text-[#009e8e] font-medium">
                       Publication Ethics
                     </Link>
@@ -212,6 +223,15 @@ export default function Header() {
                 </Link>
                 <Link href="/editorial-board" onClick={() => setMobileOpen(false)} className="block px-3 py-3 text-sm text-[#333] font-medium">
                   Editorial Board
+                </Link>
+                <Link href="/peer-review" onClick={() => setMobileOpen(false)} className="block px-3 py-3 text-sm text-[#333] font-medium">
+                  Peer Review Process
+                </Link>
+                <Link href="/for-authors" onClick={() => setMobileOpen(false)} className="block px-3 py-3 text-sm text-[#333] font-medium">
+                  For Authors
+                </Link>
+                <Link href="/for-reviewers" onClick={() => setMobileOpen(false)} className="block px-3 py-3 text-sm text-[#333] font-medium">
+                  For Reviewers
                 </Link>
                 <Link href="/submission-guidelines" onClick={() => setMobileOpen(false)} className="block px-3 py-3 text-sm text-[#333] font-medium">
                   Submission Guidelines

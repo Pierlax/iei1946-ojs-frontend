@@ -18,6 +18,9 @@ const PublicationEthics = lazy(() => import("./pages/PublicationEthics"));
 const Contacts = lazy(() => import("./pages/Contacts"));
 const EditorialBoard = lazy(() => import("./pages/EditorialBoard"));
 const Blog = lazy(() => import("./pages/Blog"));
+const PeerReview = lazy(() => import("./pages/PeerReview"));
+const ForAuthors = lazy(() => import("./pages/ForAuthors"));
+const ForReviewers = lazy(() => import("./pages/ForReviewers"));
 
 // Design System: Institutional Elegance
 // - Primary: Dark Navy (#1a3c5e)
@@ -48,6 +51,9 @@ function Router() {
         <Route path="/contacts" component={Contacts} />
         <Route path="/editorial-board" component={EditorialBoard} />
         <Route path="/blog" component={Blog} />
+        <Route path="/peer-review" component={PeerReview} />
+        <Route path="/for-authors" component={ForAuthors} />
+        <Route path="/for-reviewers" component={ForReviewers} />
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />
       </Switch>
