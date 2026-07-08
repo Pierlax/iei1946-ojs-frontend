@@ -94,7 +94,7 @@ export const FOUNDERS = [
 ];
 
 export const INDEXING = [
-  "RePEc", "Crossref", "Econpapers", "Econlit", "Google Scholar",
+  "RePEc", "Crossref", "Econpapers", "Econlit", "Google Scholar", "ACNP/SBN",
 ];
 
 export interface Article {

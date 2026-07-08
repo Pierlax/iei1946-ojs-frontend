@@ -12,9 +12,10 @@ const GUIDELINES = [
     title: "Manuscript Preparation",
     items: [
       "Manuscripts should be written in English.",
-      "The text should be typed in Word format, double-spaced, with wide margins.",
-      "The first page should contain: title, author(s) name(s), affiliation(s), e-mail address of the corresponding author, abstract (max 150 words), JEL classification codes, and keywords (max 5).",
-      "Footnotes should be numbered consecutively and placed at the bottom of the page.",
+      "The manuscript must be submitted in Microsoft Word (.docx) format only, double-spaced, with wide margins and standard 10 or 12 pt font. Pages must be numbered consecutively.",
+      "The first page should contain: title, author(s) name(s) with ORCID identifier(s), affiliation(s), designation of the corresponding author, e-mail addresses, abstract (max 200 words), JEL classification codes, and keywords (max 5).",
+      "Section headings should be set in small caps.",
+      "Footnotes should be numbered consecutively as superscript, placed before the punctuation, and appear at the bottom of the page.",
       "Mathematical formulas should be numbered consecutively on the right-hand side of the page.",
       "Tables and figures should be numbered consecutively and placed at the end of the manuscript.",
     ],
@@ -22,21 +23,31 @@ const GUIDELINES = [
   {
     title: "References",
     items: [
-      "References should be listed alphabetically at the end of the manuscript.",
-      'In-text citations should follow the author-date format: (Author, Year) or Author (Year).',
-      "Journal articles: Author, A.B. (Year), \"Title of Article\", Journal Name, Vol. X, No. Y, pp. XX-YY.",
-      "Books: Author, A.B. (Year), Title of Book, Publisher, City.",
-      "Book chapters: Author, A.B. (Year), \"Title of Chapter\", in Editor, C.D. (ed.), Title of Book, Publisher, City, pp. XX-YY.",
+      "References should follow the Harvard style and be listed alphabetically at the end of the manuscript.",
+      "In-text citations use the author-date format: (Author, Year). For works by three or more authors, use \"Author et al. (Year)\". For multiple works by the same author in the same year, append lowercase letters after the date (e.g. 2020a, 2020b).",
+      "All entries should include accurate DOI links where available.",
+      "Journal article — Cosci, S., Meliciani, V. and Sabato, V. (2016) 'Relationship lending and innovation: empirical evidence on a sample of European firms', Economics of Innovation and New Technology, 25(4), pp. 335-357.",
+      "Book — Cerulli, G. (2022) Econometric Evaluation of Socio-Economic Programs, Advanced Studies in Theoretical and Applied Econometrics. Springer Berlin Heidelberg. https://doi.org/10.1007/978-3-662-65945-8",
+      "Chapter in edited book — Jaffe, D. and Stiglitz, J.E. (1990) 'Credit rationing', in Friedman, B. and Hahn, F. (eds.) Handbook of Monetary Economics, Vol. 2. Elsevier, pp. 837-888.",
     ],
   },
   {
     title: "Submission Process",
     items: [
-      "Authors should register on the journal's submission platform.",
-      "Manuscripts should be submitted electronically through the online submission system.",
+      "Authors should register on the journal's OJS submission platform.",
+      "Manuscripts must be submitted electronically through the OJS online submission system.",
       "A cover letter should accompany the submission, confirming that the manuscript has not been published elsewhere and is not under consideration by another journal.",
-      "The review process follows a double-blind peer-review procedure.",
+      "The review process follows a double-blind peer-review procedure with at least two independent reviewers.",
       "Authors will be notified of the editorial decision within approximately 10 weeks.",
+    ],
+  },
+  {
+    title: "Use of Generative AI",
+    items: [
+      "Generative AI (e.g. ChatGPT) may be used only to improve readability and language, under strict human supervision.",
+      "Authors remain fully responsible for the content and must review and edit any AI-generated text.",
+      "AI tools must not be listed as authors: authorship remains the sole responsibility of human contributors.",
+      "If generative AI was used beyond basic spelling and grammar checks, its use must be clearly declared on the Title Page when submitting the manuscript, indicating the tool used and how it was employed.",
     ],
   },
   {

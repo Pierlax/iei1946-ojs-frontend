@@ -15,7 +15,7 @@ const SECTIONS = [
     subsections: [
       {
         subtitle: "Originality and Plagiarism",
-        text: "Authors should ensure that their submitted work is entirely original. If the work and/or words of others have been used, they must be appropriately cited or quoted. Plagiarism in all its forms constitutes unethical publishing behaviour and is unacceptable.",
+        text: "Authors should ensure that their submitted work is entirely original. If the work and/or words of others have been used, they must be appropriately cited or quoted. Any form of plagiarism — including self-plagiarism, duplicate publication, and unjustified text recycling — constitutes unethical publishing behaviour and is unacceptable.",
       },
       {
         subtitle: "Authorship and Contributorship",
@@ -93,7 +93,7 @@ const SECTIONS = [
     subsections: [
       {
         subtitle: "",
-        text: "Authors are encouraged to make their data and materials available to other researchers, subject to ethical and legal constraints. When data sharing is not possible, authors should provide a clear statement explaining the restrictions. The journal supports the principles of research reproducibility and transparency.",
+        text: "Authors are encouraged to make their data and materials available to other researchers, subject to ethical and legal constraints, and to deposit supporting materials in trusted, publicly accessible repositories where feasible. When data sharing is not possible, authors should provide a clear statement explaining the restrictions. The journal supports the principles of research reproducibility and transparency.",
       },
     ],
   },
@@ -103,7 +103,7 @@ const SECTIONS = [
     subsections: [
       {
         subtitle: "",
-        text: "The journal will publish corrections, clarifications, retractions, and apologies when needed. Corrections will be linked to the original article. Retractions will be issued in cases of serious misconduct, including fabrication, falsification, or plagiarism. The journal encourages post-publication discussion and will consider publishing substantive comments on published articles.",
+        text: "The journal publishes formal corrections (\"Erratum\"), clarifications, retractions, and apologies when needed. Corrections and Errata are linked to the original article. Retractions are issued in cases of serious misconduct — including fabrication, falsification, or plagiarism — following COPE guidelines. The journal encourages post-publication discussion and will consider publishing substantive comments on published articles.",
       },
     ],
   },
