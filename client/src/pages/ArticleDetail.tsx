@@ -240,23 +240,33 @@ export default function ArticleDetail() {
                       Read the Full Article
                     </h3>
                     <p className="text-xs text-gray-500 mt-1 mb-3">
-                      Download the article in PDF format to read and print.
+                      Download the PDF, or open the article page on the OJS platform where the journal is hosted.
                     </p>
-                    <button
-                      onClick={() => {
-                        if (article.pdfUrl) {
-                          window.open(article.pdfUrl, "_blank");
-                        } else {
-                          window.open(
-                            `${JOURNAL.ojsBaseUrl}/index.php/${JOURNAL.ojsJournalPath}/article/view/${article.id}`,
-                            "_blank",
-                          );
-                        }
-                      }}
-                      className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#009e8e] text-white text-sm font-bold rounded hover:bg-[#008a7c] transition-colors"
-                    >
-                      <Download size={16} /> DOWNLOAD PDF
-                    </button>
+                    <div className="flex flex-wrap gap-2">
+                      <button
+                        onClick={() => {
+                          if (article.pdfUrl) {
+                            window.open(article.pdfUrl, "_blank");
+                          } else {
+                            window.open(
+                              `${JOURNAL.ojsBaseUrl}/index.php/${JOURNAL.ojsJournalPath}/article/view/${article.id}`,
+                              "_blank",
+                            );
+                          }
+                        }}
+                        className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#009e8e] text-white text-sm font-bold rounded hover:bg-[#008a7c] transition-colors"
+                      >
+                        <Download size={16} /> DOWNLOAD PDF
+                      </button>
+                      <a
+                        href={`${JOURNAL.ojsBaseUrl}/index.php/${JOURNAL.ojsJournalPath}/article/view/${article.id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-5 py-2.5 border border-[#009e8e]/30 text-[#009e8e] text-sm font-semibold rounded hover:bg-[#009e8e]/5 transition-colors"
+                      >
+                        View on OJS <ExternalLink size={14} />
+                      </a>
+                    </div>
                   </div>
                 </div>
               </section>

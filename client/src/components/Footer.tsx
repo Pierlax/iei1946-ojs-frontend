@@ -5,14 +5,14 @@
 
 import { Link } from "wouter";
 import { JOURNAL, INDEXING } from "@/lib/data";
-import { Facebook, Twitter, Linkedin, Youtube } from "lucide-react";
+import { Facebook, Twitter, Linkedin, Youtube, ExternalLink, Server } from "lucide-react";
 
 export default function Footer() {
   return (
     <footer className="bg-[#1b3a5c] text-white/80">
       {/* Main footer content */}
       <div className="container py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Journal info */}
           <div>
             <img
@@ -46,15 +46,50 @@ export default function Footer() {
           <div>
             <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">For Authors</h4>
             <ul className="space-y-2.5">
+              <li><Link href="/for-authors" className="text-sm text-white/60 hover:text-[#00c4b0] transition-colors">Authors Hub</Link></li>
               <li><Link href="/submission-guidelines" className="text-sm text-white/60 hover:text-[#00c4b0] transition-colors">Submission Guidelines</Link></li>
-              <li>
-                <a href={JOURNAL.loginUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-white/60 hover:text-[#00c4b0] transition-colors">
-                  Author Login
-                </a>
-              </li>
+              <li><Link href="/peer-review" className="text-sm text-white/60 hover:text-[#00c4b0] transition-colors">Peer Review Process</Link></li>
               <li><Link href="/oa-copyright" className="text-sm text-white/60 hover:text-[#00c4b0] transition-colors">OA & Copyright</Link></li>
               <li><Link href="/publication-ethics" className="text-sm text-white/60 hover:text-[#00c4b0] transition-colors">Publication Ethics</Link></li>
               <li><Link href="/contacts" className="text-sm text-white/60 hover:text-[#00c4b0] transition-colors">Contact Us</Link></li>
+            </ul>
+          </div>
+
+          {/* OJS Platform */}
+          <div>
+            <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-1.5">
+              <Server size={12} className="text-[#00c4b0]" />
+              OJS Platform
+            </h4>
+            <p className="text-xs text-white/40 leading-relaxed mb-3">
+              Submissions, peer review, and article publishing run on Open Journal Systems (OJS).
+            </p>
+            <ul className="space-y-2.5">
+              <li>
+                <a href={JOURNAL.submissionUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-white/60 hover:text-[#00c4b0] transition-colors inline-flex items-center gap-1">
+                  Submit a Paper <ExternalLink size={10} />
+                </a>
+              </li>
+              <li>
+                <a href={JOURNAL.loginUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-white/60 hover:text-[#00c4b0] transition-colors inline-flex items-center gap-1">
+                  Author Login <ExternalLink size={10} />
+                </a>
+              </li>
+              <li>
+                <a href={JOURNAL.registerUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-white/60 hover:text-[#00c4b0] transition-colors inline-flex items-center gap-1">
+                  Register <ExternalLink size={10} />
+                </a>
+              </li>
+              <li>
+                <a href={JOURNAL.authorDashboardUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-white/60 hover:text-[#00c4b0] transition-colors inline-flex items-center gap-1">
+                  Author Dashboard <ExternalLink size={10} />
+                </a>
+              </li>
+              <li>
+                <a href={JOURNAL.ojsHomeUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-white/60 hover:text-[#00c4b0] transition-colors inline-flex items-center gap-1">
+                  Journal on OJS <ExternalLink size={10} />
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -82,9 +117,21 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-white/10">
         <div className="container py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-white/40">
-            &copy; {new Date().getFullYear()} {JOURNAL.publisherEn}. All rights reserved.
-          </p>
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
+            <p className="text-xs text-white/40">
+              &copy; {new Date().getFullYear()} {JOURNAL.publisherEn}. All rights reserved.
+            </p>
+            <span className="hidden sm:inline text-white/20">|</span>
+            <a
+              href={JOURNAL.ojsSoftwareUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs text-white/40 hover:text-[#00c4b0] transition-colors inline-flex items-center gap-1"
+              title="Learn more about Open Journal Systems"
+            >
+              Powered by <span className="font-semibold text-white/60">Open Journal Systems</span> <ExternalLink size={9} />
+            </a>
+          </div>
           <div className="flex items-center gap-3">
             <a href="https://www.facebook.com/iei1946" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-[#00c4b0] transition-colors" aria-label="Facebook">
               <Facebook size={15} />

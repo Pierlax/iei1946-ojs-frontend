@@ -30,6 +30,9 @@ export const JOURNAL = {
   submissionUrl: ojsUrl("submissions"),
   loginUrl: ojsUrl("login"),
   registerUrl: ojsUrl("user/register"),
+  ojsHomeUrl: `${OJS_BASE}/index.php/${OJS_JOURNAL}`,
+  authorDashboardUrl: ojsUrl("authorDashboard"),
+  ojsSoftwareUrl: "https://pkp.sfu.ca/software/ojs/",
   logoUrl: "https://d2xsxph8kpxj0f.cloudfront.net/109698682/Ybj72GNFScvp3J8KE6MPud/iei-logo_add5cc4c.webp",
   heroUrl: "https://d2xsxph8kpxj0f.cloudfront.net/109698682/Ybj72GNFScvp3J8KE6MPud/iei-hero-background_2104ff9e.png",
   // Original site images

@@ -238,7 +238,7 @@ export default function Home() {
               <p className="text-sm font-bold text-[#1b3a5c]">{issueLabel}</p>
               <div className="mt-3 space-y-2">
                 {issueLoading ? (
-                  <p className="text-sm text-gray-400 italic">Loading…</p>
+                  <p className="text-sm text-gray-400 italic">Loading from OJS…</p>
                 ) : currentArticles.length === 0 ? (
                   <p className="text-sm text-gray-400 italic">No articles published yet.</p>
                 ) : (
@@ -338,7 +338,7 @@ export default function Home() {
                 {activeTab === "recent" && (
                   <>
                     {recentLoading && (
-                      <p className="text-sm text-gray-400 italic py-6">Loading recent articles…</p>
+                      <p className="text-sm text-gray-400 italic py-6">Loading recent articles from OJS…</p>
                     )}
                     {!recentLoading && recentArticles.length === 0 && (
                       <div className="border border-dashed border-gray-200 rounded p-6 text-center">
